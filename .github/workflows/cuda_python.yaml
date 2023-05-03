@@ -45,13 +45,13 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: "./cuda_python/"
-          build-args:
-            - PYTHON=${{ matrix.python }}
-            - CUDA_VERSION=${{ matrix.cuda }}
-            - CUDNN=${{ matrix.cudnn }}
-            - UBUNTU=${{ matrix.ubuntu }}
-            - ROOT_PASSWORD=${{ matrix.root_password }}
-            - GET_PIP_URL=${{ matrix.get_pip_url }}
+          build-args: |
+            PYTHON=${{ matrix.python }}
+            CUDA_VERSION=${{ matrix.cuda }}
+            CUDNN=${{ matrix.cudnn }}
+            UBUNTU=${{ matrix.ubuntu }}
+            ROOT_PASSWORD=${{ matrix.root_password }}
+            GET_PIP_URL=${{ matrix.get_pip_url }}
           push: true
           tags: ${{ matrix.tags }}
           cache-from: type=gha
