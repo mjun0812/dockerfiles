@@ -16,21 +16,42 @@ jobs:
             cudnn: "8"
             root_password: "root"
             get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
-            tags: ghcr.io/mjun0812/cuda1180-python31010-server:latest
-            # - cuda: "11.3.1"
-            #   python: "3.10.10"
-            #   ubuntu: "20.04"
-            #   cudnn: "8"
-            #   root_password: "root"
-            #   get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
-            #   tags: ghcr.io/mjun0812/cuda1131-python31010-server:latest
-            # - cuda: "10.2"
-            #   python: "3.8.16"
-            #   ubuntu: "18.04"
-            #   cudnn: "8"
-            #   root_password: "root"
-            #   get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
-            #   tags: ghcr.io/mjun0812/cuda102-python3816-server:latest
+            tags: ghcr.io/mjun0812/cuda1180-python310-server:latest
+          - cuda: "11.6.2"
+            python: "3.10.10"
+            ubuntu: "20.04"
+            cudnn: "8"
+            root_password: "root"
+            get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
+            tags: ghcr.io/mjun0812/cuda1162-python310-server:latest
+          - cuda: "11.3.1"
+            python: "3.10.10"
+            ubuntu: "20.04"
+            cudnn: "8"
+            root_password: "root"
+            get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
+            tags: ghcr.io/mjun0812/cuda1131-python310-server:latest
+          - cuda: "11.3.1"
+            python: "3.8.16"
+            ubuntu: "20.04"
+            cudnn: "8"
+            root_password: "root"
+            get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
+            tags: ghcr.io/mjun0812/cuda1131-python38-server:latest
+          - cuda: "10.2"
+            python: "3.8.16"
+            ubuntu: "18.04"
+            cudnn: "8"
+            root_password: "root"
+            get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
+            tags: ghcr.io/mjun0812/cuda102-python38-server:latest
+          - cuda: "10.1"
+            python: "3.8.16"
+            ubuntu: "18.04"
+            cudnn: "8"
+            root_password: "root"
+            get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
+            tags: ghcr.io/mjun0812/cuda101-python38-server:latest
     steps:
       - uses: actions/checkout@v3
 
