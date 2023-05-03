@@ -77,7 +77,6 @@ jobs:
             ROOT_PASSWORD=${{ matrix.root_password }}
             GET_PIP_URL=${{ matrix.get_pip_url }}
           push: true
-          load: true
           tags: ${{ matrix.tags }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
