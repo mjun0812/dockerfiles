@@ -9,7 +9,6 @@ USER_ID=`id -u`
 GROUP_ID=`id -g`
 GROUP_NAME=`id -gn`
 USER_NAME=$USER
-CMD=$@
 
 DESCRIPTION=$(cat <<< "CUDA + Python Docker
 同階層にpoetry, requirements.txtを置くと自動でパッケージがインストールされます
@@ -75,4 +74,4 @@ docker run \
     --volume $VOLUME:$HOME/workspace \
     --name "${CONTAINER_NAME}" \
     "${IMAGE_NAME}" \
-    "${CMD:-zsh}"
+    zsh
