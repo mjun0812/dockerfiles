@@ -45,13 +45,13 @@ jobs:
             root_password: "root"
             get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
             tags: ghcr.io/mjun0812/cuda102-python38-server:latest
-          - cuda: "10.1"
-            python: "3.8.16"
-            ubuntu: "18.04"
-            cudnn: "8"
-            root_password: "root"
-            get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
-            tags: ghcr.io/mjun0812/cuda101-python38-server:latest
+          # - cuda: "10.1"
+          #   python: "3.8.16"
+          #   ubuntu: "18.04"
+          #   cudnn: "8"
+          #   root_password: "root"
+          #   get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
+          #   tags: ghcr.io/mjun0812/cuda101-python38-server:latest
     steps:
       - uses: actions/checkout@v3
 
