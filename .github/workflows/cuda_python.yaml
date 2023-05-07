@@ -2,7 +2,7 @@ name: Deploy CUDA Python Docker Image
 on:
   workflow_dispatch:
   push:
-    braches: main
+    branches: ["main"]
 
 jobs:
   build:

@@ -16,4 +16,4 @@ echo 'export PATH='"~/.local/bin:$PATH" >> $HOME/.zshrc
 chown $USER_NAME:$GROUP_NAME $HOME/.zshrc
 
 CMD="${@:-zsh}"
-exec /usr/sbin/gosu ${USER_NAME} $CMD
+exec /usr/sbin/gosu ${USER_NAME} /usr/bin/zsh -c $CMD
