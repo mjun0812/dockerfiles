@@ -17,6 +17,13 @@ jobs:
             root_password: "root"
             get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
             tags: ghcr.io/mjun0812/cuda1180-python310-server:latest
+          - cuda: "11.7.1"
+            python: "3.10.10"
+            ubuntu: "22.04"
+            cudnn: "8"
+            root_password: "root"
+            get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
+            tags: ghcr.io/mjun0812/cuda1171-python310-server:latest
           - cuda: "11.6.2"
             python: "3.10.10"
             ubuntu: "20.04"
