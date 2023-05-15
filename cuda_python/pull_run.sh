@@ -9,6 +9,7 @@ USER_ID=`id -u`
 GROUP_ID=`id -g`
 GROUP_NAME=`id -gn`
 USER_NAME=$USER
+UBUNTU=""
 
 DESCRIPTION=$(cat <<< "CUDA + Python Docker
 同階層にpoetry, requirements.txtを置くと自動でパッケージがインストールされます
@@ -18,6 +19,7 @@ Option:
     -v, --volume: Mount Volume. default is $VOLUME
     -c, --cuda:   CUDA Version. default is $CUDA_VERSION
     -p, --python: python version. default to $PYTHON 
+    -u, --ubuntu: ubuntu version.
     --prefix:     Set Container Name Prefix. Ex.hoge-cuda112-server-[prefix]. default is unixtime.
     -d: Detach(background) run."
 )
@@ -40,6 +42,10 @@ for OPT in "$@"; do
             VOLUME="$2"
             shift 2
         ;;
+        '-u' | '--ubuntu')
+            UBUNTU="-ubuntu$2"
+            shift 2
+        ;;
         '-d' | '--detach')
             DETACH='-d'
             shift 2
@@ -51,8 +57,8 @@ for OPT in "$@"; do
     esac
 done
 
-IMAGE_NAME="ghcr.io/mjun0812/cuda${CUDA_VERSION//./}-python${PYTHON//./}-server:latest"
-CONTAINER_NAME="${USER_NAME}-cuda${CUDA_VERSION//./}-python${PYTHON//./}-server${CONTAINER_NAME_PREFIX}"
+IMAGE_NAME="ghcr.io/mjun0812/cuda${CUDA_VERSION//./}-python${PYTHON//./}${UBUNTU}-server:latest"
+CONTAINER_NAME="${USER_NAME}-cuda${CUDA_VERSION//./}-python${PYTHON//./}${UBUNTU}-server${CONTAINER_NAME_PREFIX}"
 
 docker run \
     -it \
