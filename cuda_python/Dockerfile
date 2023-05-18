@@ -93,7 +93,7 @@ RUN { \
 RUN wget -q "https://www.python.org/ftp/python/${PYTHON}/Python-${PYTHON}.tar.xz" &&\
     tar xvf Python-${PYTHON}.tar.xz && \
     cd Python-${PYTHON} &&\
-    ./configure --without-ensurepip --enable-loadable-sqlite-extensions --enable-shared && \
+    ./configure --without-ensurepip --enable-loadable-sqlite-extensions && \
     make -j 8 &&\
     make install && \
     cd ../ && rm -rf Python-${PYTHON} && \
