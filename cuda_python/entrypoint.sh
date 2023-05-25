@@ -14,6 +14,7 @@ chown $USER_NAME:$GROUP_NAME $HOME
 touch $HOME/.zshrc
 echo 'export PATH='"~/.local/bin:$PATH" >> $HOME/.zshrc
 chown $USER_NAME:$GROUP_NAME $HOME/.zshrc
+cd $HOME
 
 if [[ $# -eq 0 ]]; then
     exec /usr/sbin/gosu ${USER_NAME} zsh
