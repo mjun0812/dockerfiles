@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        # platforms: [linux/amd64, linux/arm64]
         include:
           - cuda: "11.8.0"
             python: "3.11.4"
@@ -75,6 +74,15 @@ jobs:
           #   get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
           #   tags: ghcr.io/mjun0812/cuda101-python38-server:latest
     steps:
+      - run: df -h
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 512
+          swap-size-mb: 1024
+          remove-dotnet: 'true'
+      - run: df -h
+
       - uses: actions/checkout@v3
 
       - name: Set up Docker Buildx
@@ -99,7 +107,6 @@ jobs:
             ROOT_PASSWORD=${{ matrix.root_password }}
             GET_PIP_URL=${{ matrix.get_pip_url }}
           push: true
-          # platforms: ${{ matrix.platforms }}
           platforms: linux/amd64,linux/arm64
           tags: ${{ matrix.tags }}
           cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.tags }}
