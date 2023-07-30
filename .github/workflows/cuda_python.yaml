@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        platforms: [linux/amd64, linux/arm64]
+        # platforms: [linux/amd64, linux/arm64]
         include:
           - cuda: "11.8.0"
             python: "3.11.4"
@@ -99,7 +99,8 @@ jobs:
             ROOT_PASSWORD=${{ matrix.root_password }}
             GET_PIP_URL=${{ matrix.get_pip_url }}
           push: true
-          platforms: ${{ matrix.platforms }}
+          # platforms: ${{ matrix.platforms }}
+          platforms: linux/amd64,linux/arm64
           tags: ${{ matrix.tags }}
           cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.tags }}
           cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.tags }}
