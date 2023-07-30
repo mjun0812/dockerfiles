@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        platforms: [linux/amd64, linux/arm64]
         include:
           - cuda: "11.8.0"
             python: "3.11.4"
@@ -59,13 +60,13 @@ jobs:
             root_password: "root"
             get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
             tags: ghcr.io/mjun0812/cuda1131-python38-server:latest
-#           - cuda: "10.2"
-#             python: "3.8.16"
-#             ubuntu: "18.04"
-#             cudnn: "8"
-#             root_password: "root"
-#             get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
-#             tags: ghcr.io/mjun0812/cuda102-python38-server:latest
+          # - cuda: "10.2"
+          #   python: "3.8.16"
+          #   ubuntu: "18.04"
+          #   cudnn: "8"
+          #   root_password: "root"
+          #   get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
+          #   tags: ghcr.io/mjun0812/cuda102-python38-server:latest
           # - cuda: "10.1"
           #   python: "3.8.16"
           #   ubuntu: "18.04"
@@ -98,7 +99,7 @@ jobs:
             ROOT_PASSWORD=${{ matrix.root_password }}
             GET_PIP_URL=${{ matrix.get_pip_url }}
           push: true
-          platforms: linux/amd64,linux/arm64
+          platforms: ${{ matrix.platforms }}
           tags: ${{ matrix.tags }}
           cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.tags }}
           cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.tags }}
