@@ -80,7 +80,7 @@ jobs:
         with:
           # root-reserve-mb: 512
           # swap-size-mb: 1024
-          build-mount-path: "/"
+          build-mount-path: "/var/lib"
           remove-dotnet: 'true'
           remove-codeql: 'true'
       - run: df -h
