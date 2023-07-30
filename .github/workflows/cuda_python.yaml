@@ -74,16 +74,16 @@ jobs:
           #   get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
           #   tags: ghcr.io/mjun0812/cuda101-python38-server:latest
     steps:
-      - run: df -h
       - name: Maximize build space
-        uses: easimon/maximize-build-space@master
-        with:
-          # root-reserve-mb: 512
-          # swap-size-mb: 1024
-          build-mount-path: "/var/lib/docker"
-          remove-dotnet: 'true'
-          remove-codeql: 'true'
-      - run: df -h
+        run: |
+          df -h
+          echo "\n\n"
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          df -h
+          echo "\n\n" 
 
       - uses: actions/checkout@v3
 
