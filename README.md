@@ -1,6 +1,6 @@
 # Dockerfiles
 
-Docker Imageを作ってGithub Container Registryにひたすらあげるレポジトリ
+Docker Imageを作ってGithub Container Registryにひたすらあげるリポジトリ
 
 ## CUDA + Python
 
