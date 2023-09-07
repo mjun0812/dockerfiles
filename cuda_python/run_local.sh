@@ -1,16 +1,16 @@
 #!/bin/bash
 
-CUDA_VERSION="11.3.1"
-UBUNTU="20.04"
+CUDA_VERSION="11.8.0"
+UBUNTU="22.04"
 CUDNN="8"
-PYTHON="3.10.6"
-
+PYTHON="3.11.5"
 CONTAINER_NAME_PREFIX="-$(date '+%s')"
 VOLUME="${HOME}/workspace"
 USER_ID=`id -u`
 GROUP_ID=`id -g`
 GROUP_NAME=`id -gn`
 USER_NAME=$USER
+
 CMD=$@
 
 DESCRIPTION=$(cat <<< "CUDA + Python Docker
@@ -22,7 +22,7 @@ Option:
     -c, --cuda:   CUDA Version. default is $CUDA_VERSION
     -u, --ubuntu: Ubuntu Version. default is $UBUNTU
     --cudnn:      CUDNN Version. default is $CUDNN
-    -p, --python: python version. default to $PYTHON 
+    -p, --python: python version. default to $PYTHON
     --prefix:     Set Container Name Prefix. Ex.hoge-cuda112-server-[prefix]. default is unixtime.
     -d: Detach(background) run."
 )
@@ -67,24 +67,49 @@ done
 IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION//./}-python${PYTHON//./}-server:latest"
 CONTAINER_NAME="${USER_NAME}-cuda${CUDA_VERSION//./}-python${PYTHON//./}-server${CONTAINER_NAME_PREFIX}"
 
-docker run \
-    -it \
-    --rm \
-    $DETACH \
-    --gpus all \
-    --net host \
-    --ulimit memlock=-1 \
-    --shm-size=128g \
-    --env DISPLAY=$DISPLAY \
-    --env USER_NAME=$USER_NAME \
-    --env USER_ID=$USER_ID \
-    --env GROUP_NAME=$GROUP_NAME \
-    --env GROUP_ID=$GROUP_ID \
-    --workdir $HOME \
-    --volume $HOME/.Xauthority:$HOME/.Xauthority:rw \
-    --volume /tmp/.X11-unix:/tmp/.X11-unix:rw \
-    --volume $HOME/.cache:$HOME/.cache \
-    --volume $VOLUME:$HOME/workspace \
-    --name "${CONTAINER_NAME}" \
-    "${IMAGE_NAME}" \
-    "${CMD:-zsh}"
+if type nvcc > /dev/null 2>&1; then
+    # Use GPU
+    docker run \
+        -it \
+        --rm \
+        $DETACH \
+        --gpus all \
+        --net host \
+        --ulimit memlock=-1 \
+        --shm-size=128g \
+        --env DISPLAY=$DISPLAY \
+        --env USER_NAME=$USER_NAME \
+        --env USER_ID=$USER_ID \
+        --env GROUP_NAME=$GROUP_NAME \
+        --env GROUP_ID=$GROUP_ID \
+        --workdir $HOME \
+        --volume $HOME/.Xauthority:$HOME/.Xauthority:rw \
+        --volume /tmp/.X11-unix:/tmp/.X11-unix:rw \
+        --volume $HOME/.cache:$HOME/.cache \
+        --volume $VOLUME:$HOME/workspace \
+        --name "${CONTAINER_NAME}" \
+        "${IMAGE_NAME}" \
+        "${CMD:-zsh}"
+else
+    # CPU
+    docker run \
+        -it \
+        --rm \
+        $DETACH \
+        --net host \
+        --ulimit memlock=-1 \
+        --shm-size=128g \
+        --env DISPLAY=$DISPLAY \
+        --env USER_NAME=$USER_NAME \
+        --env USER_ID=$USER_ID \
+        --env GROUP_NAME=$GROUP_NAME \
+        --env GROUP_ID=$GROUP_ID \
+        --workdir $HOME \
+        --volume $HOME/.Xauthority:$HOME/.Xauthority:rw \
+        --volume /tmp/.X11-unix:/tmp/.X11-unix:rw \
+        --volume $HOME/.cache:$HOME/.cache \
+        --volume $VOLUME:$HOME/workspace \
+        --name "${CONTAINER_NAME}" \
+        "${IMAGE_NAME}" \
+        "${CMD:-zsh}"
+fi

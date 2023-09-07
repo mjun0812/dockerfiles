@@ -3,19 +3,15 @@
 CUDA_VERSION="11.8.0"
 UBUNTU="22.04"
 CUDNN="8"
-PYTHON="3.10.10"
-
+PYTHON="3.11.5"
 ROOT_PASSWORD=$USER
-USER_ID=`id -u`
-GROUP_ID=`id -g`
-GROUP_NAME=`id -gn`
 USER_NAME=$USER
 
 DESCRIPTION=$(cat <<< "CUDA + Python Docker
 同階層にpoetry, requirements.txtを置くと自動でパッケージがインストールされます．
 
 Option:
-    -p, --python: python version. default to $PYTHON 
+    -p, --python: python version. default to $PYTHON
     -c, --cuda:   CUDA Version. default to $CUDA_VERSION
     -u, --ubuntu: Ubuntu Version. default to $UBUNTU
     --cudnn:      CUDNN Version. default to $CUDNN
