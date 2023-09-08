@@ -24,7 +24,7 @@ jobs:
             ONNXRUNTIME_CLONE_TAG: "ae74a517b62baa6d973e46b5b51ac9a640512c46"
             OPENVINO_VERSION: "2023.0.2"
             POETRY_VERSION: "1.6.1"
-            tags: ghcr.io/mjun0812/cuda1180-python311-server:latest
+            tags: ghcr.io/mjun0812/torch-onnx1141-1151-trt861-vino202302-server
     steps:
       - name: Maximize build space
         run: |
