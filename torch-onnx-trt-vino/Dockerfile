@@ -105,6 +105,7 @@ RUN tar -xzvf TensorRT-${TENSORRT_FULL_VERSION}.Linux.x86_64-gnu.cuda-${CUDA_MID
     && rm -rf /TensorRT-${TENSORRT_FULL_VERSION}.Linux.x86_64-gnu.cuda-${CUDA_MIDDLE_VERSION}.tar.gz
 ENV TRT_LIBPATH /TensorRT-${TENSORRT_FULL_VERSION}/lib
 ENV TRT_ROOT /TensorRT-${TENSORRT_FULL_VERSION}
+ENV PATH ${PATH}:/TensorRT-${TENSORRT_FULL_VERSION}/lib/bin
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/TensorRT-${TENSORRT_FULL_VERSION}/lib
 
 # ### Add TensorRT OSS Additional Package ###
@@ -128,6 +129,7 @@ RUN git clone -b ${ONNX_TENSORRT_TAG} --recursive https://github.com/onnx/onnx-t
     && cmake .. -DTENSORRT_ROOT=${TRT_ROOT} \
     && make -j$(nproc) \
     && make install
+ENV PATH ${PATH}:/onnx-tensorrt/build
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/onnx-tensorrt/build
 
 # Install torch2trt
