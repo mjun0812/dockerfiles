@@ -40,7 +40,8 @@ RUN curl -sSL https://install.python-poetry.org | POETRY_VERSION=${POETRY_VERSIO
     && poetry config virtualenvs.create false \
     && poetry config installer.max-workers 10 \
     && poetry install --no-interaction --no-ansi \
-    && pip install onnx==${ONNX_VERSION} onnxruntime==${ONNXRUNTIME_VERSION}
+    && pip install onnx==${ONNX_VERSION} onnxruntime==${ONNXRUNTIME_VERSION} \
+    && rm -rf ~/.cache
 
 # ####### Install TensorRT #######
 
