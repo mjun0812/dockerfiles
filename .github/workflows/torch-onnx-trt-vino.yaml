@@ -34,6 +34,64 @@ jobs:
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /opt/ghc
           sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /usr/share/kotlinc
+          sudo rm -rf /usr/lib/jvm
+          sudo rm -rf /usr/share/swift
+          sudo rm -rf /usr/local/share/boos
+          sudo rm -rf /usr/local/julia*
+          sudo rm -rf /usr/local/share/edge_driver
+          sudo rm -rf /usr/local/share/chromedriver-linux64
+          sudo rm -rf /usr/local/share/gecko_driver
+          sudo rm -rf /usr/share/miniconda
+          sudo rm -rf /usr/local/share/phantomjs*
+          sudo rm -rf /usr/share/sbt
+          sudo rm -rf /usr/local/sqlpackage
+          sudo npm uninstall bazel
+          rustup self uninstall -y
+          sudo apt purge \
+            ansible \
+            apache2 \
+            aria2 \
+            azure-cli \
+            cabal* \
+            clang* \
+            dotnet-sdk* \
+            firefox \
+            ghc* \
+            google-chrome-stable \
+            google-cloud-sdk \
+            kubectl \
+            libpq-dev \
+            microsoft-edge-stable \
+            moby-buildx \
+            moby-cli \
+            moby-compose \
+            moby-engine \
+            mongodb* \
+            mono-complete \
+            mysql* \
+            nginx \
+            node* \
+            npm* \
+            nuget \
+            php* \
+            postgresql* \
+            powershell \
+            r-base \
+            rpm \
+            ruby* \
+            sphinxsearch \
+            subversion \
+            yarn \
+            -yq >/dev/null 2>&1
+          sudo apt-get autoremove -y
+          sudo apt-get autoclean -y
+          docker rmi $(docker image ls -q --filter "reference=node*")
+          docker rmi $(docker image ls -q --filter "reference=buildpack*")
+          docker rmi $(docker image ls -q --filter "reference=debian*")
+          docker rmi $(docker image ls -q --filter "reference=alpine*")
+          docker rmi $(docker image ls -q --filter "reference=ubuntu:18.04")
+          docker rmi $(docker image ls -q --filter "reference=ubuntu:20.04")
           df -h
           echo "\n\n"
 
