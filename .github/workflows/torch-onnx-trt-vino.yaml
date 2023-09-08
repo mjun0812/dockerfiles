@@ -89,12 +89,6 @@ jobs:
             -yq >/dev/null 2>&1
           sudo apt-get autoremove -y
           sudo apt-get autoclean -y
-          docker rmi $(docker image ls -q --filter "reference=node*")
-          docker rmi $(docker image ls -q --filter "reference=buildpack*")
-          docker rmi $(docker image ls -q --filter "reference=debian*")
-          docker rmi $(docker image ls -q --filter "reference=alpine*")
-          docker rmi $(docker image ls -q --filter "reference=ubuntu:18.04")
-          docker rmi $(docker image ls -q --filter "reference=ubuntu:20.04")
           df -h
 
       - uses: actions/checkout@v4
