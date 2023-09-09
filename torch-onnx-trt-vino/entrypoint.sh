@@ -16,7 +16,7 @@ echo 'export PATH='"~/.local/bin:$PATH" >> $HOME/.bashrc
 chown $USER_NAME:$GROUP_NAME $HOME/.bashrc
 
 cd /onnx-tensorrt && python setup.py install > /dev/null 2>&1
-cd $HOME/workspace
+cd $HOME
 
 if [[ $# -eq 0 ]]; then
     exec /usr/sbin/gosu ${USER_NAME} bash
