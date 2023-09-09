@@ -1,0 +1,127 @@
+name: Deploy CUDA Python PyTorch ONNX TensorRT Docker Image
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - PYTHON: "311"
+            PYTHON_CP: "311"
+            CUDA_MIDDLE_VERSION: "11.8"
+            TENSORRT_FULL_VERSION: "8.6.1.6"
+            TENSORRT_MIDDLE_VERSION: "8.6.1"
+            TENSORRT_OSS_VERSION: "23.08"
+            TENSORRT_OS: "ubuntu2204"
+            TORCH_TENSORRT_VERSION: "1.4.0"
+            ONNX_TENSORRT_TAG: "release/8.6-GA"
+            ONNX_VERSION: "1.14.1"
+            ONNXRUNTIME_VERSION: "1.15.1"
+            ONNXRUNTIME_CLONE_TAG: "ae74a517b62baa6d973e46b5b51ac9a640512c46"
+            POETRY_VERSION: "1.6.1"
+            tags: ghcr.io/mjun0812/torch-onnx1141-1151-trt861-server
+    steps:
+      - name: Maximize build space
+        run: |
+          df -h
+          echo "\n\n"
+          sudo rm -rf /opt/*
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/local/share/boost
+          sudo rm -rf /usr/lib/jvm
+          sudo rm -rf /usr/share/swift
+          sudo rm -rf /usr/local/julia*
+          sudo rm -rf /opt/ghc
+          sudo rm -rf /opt/hostedtoolcache/CodeQL
+          sudo rm -rf /usr/share/kotlinc
+          sudo rm -rf /usr/local/share/edge_driver
+          sudo rm -rf /usr/local/share/chromedriver-linux64
+          sudo rm -rf /usr/local/share/gecko_driver
+          sudo rm -rf /usr/share/miniconda
+          sudo rm -rf /usr/local/share/phantomjs*
+          sudo rm -rf /usr/share/sbt
+          sudo rm -rf /usr/local/sqlpackage
+          sudo docker image prune --all --force
+          sudo npm uninstall bazel
+          rustup self uninstall -y
+          sudo apt purge \
+            ansible \
+            apache2 \
+            aria2 \
+            azure-cli \
+            cabal* \
+            clang* \
+            dotnet-sdk* \
+            firefox \
+            ghc* \
+            google-chrome-stable \
+            google-cloud-sdk \
+            kubectl \
+            libpq-dev \
+            microsoft-edge-stable \
+            moby-buildx \
+            moby-cli \
+            moby-compose \
+            moby-engine \
+            mongodb* \
+            mono-complete \
+            mysql* \
+            nginx \
+            node* \
+            npm* \
+            nuget \
+            php* \
+            postgresql* \
+            powershell \
+            r-base \
+            rpm \
+            ruby* \
+            sphinxsearch \
+            subversion \
+            yarn \
+            -yq >/dev/null 2>&1
+          sudo apt-get autoremove -y
+          sudo apt-get autoclean -y
+          df -h
+
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: "./torch-onnx-trt/"
+          build-args: |
+            PYTHON=${{ matrix.PYTHON }}
+            PYTHON_CP=${{ matrix.PYTHON_CP }}
+            CUDA_MIDDLE_VERSION=${{ matrix.CUDA_MIDDLE_VERSION }}
+            TENSORRT_FULL_VERSION=${{ matrix.TENSORRT_FULL_VERSION }}
+            TENSORRT_MIDDLE_VERSION=${{ matrix.TENSORRT_MIDDLE_VERSION }}
+            TENSORRT_OSS_VERSION=${{ matrix.TENSORRT_OSS_VERSION }}
+            TENSORRT_OS=${{ matrix.TENSORRT_OS }}
+            TORCH_TENSORRT_VERSION=${{ matrix.TORCH_TENSORRT_VERSION }}
+            ONNX_TENSORRT_TAG=${{ matrix.ONNX_TENSORRT_TAG }}
+            ONNX_VERSION=${{ matrix.ONNX_VERSION }}
+            ONNXRUNTIME_VERSION=${{ matrix.ONNXRUNTIME_VERSION }}
+            ONNXRUNTIME_CLONE_TAG=${{ matrix.ONNXRUNTIME_CLONE_TAG }}
+            POETRY_VERSION=${{ matrix.POETRY_VERSION }}
+          push: true
+          platforms: linux/amd64
+          tags: ${{ matrix.tags }}
+          cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.tags }}
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.tags }}
