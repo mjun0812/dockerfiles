@@ -11,7 +11,6 @@ GROUP_ID=`id -g`
 GROUP_NAME=`id -gn`
 USER_NAME=$USER
 
-CMD=$@
 
 DESCRIPTION=$(cat <<< "CUDA + Python Docker
 同階層にpoetry, requirements.txtを置くと自動でパッケージがインストールされます
@@ -64,6 +63,7 @@ for OPT in "$@"; do
     esac
 done
 
+CMD=$@
 IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION//./}-python${PYTHON//./}-server:latest"
 CONTAINER_NAME="${USER_NAME}-cuda${CUDA_VERSION//./}-python${PYTHON//./}-server${CONTAINER_NAME_PREFIX}"
 
