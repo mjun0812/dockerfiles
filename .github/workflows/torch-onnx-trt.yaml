@@ -60,7 +60,6 @@ jobs:
             firefox \
             ghc* \
             google-chrome-stable \
-            google-cloud-sdk \
             kubectl \
             libpq-dev \
             microsoft-edge-stable \
