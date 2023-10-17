@@ -84,7 +84,7 @@ jobs:
             sphinxsearch \
             subversion \
             yarn \
-            -yq >/dev/null 2>&1
+            -yq >/dev/null 2>&1 || true
           sudo apt-get autoremove -y
           sudo apt-get autoclean -y
           df -h
