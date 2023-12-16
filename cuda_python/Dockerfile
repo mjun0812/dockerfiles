@@ -1,10 +1,8 @@
-ARG CUDA_VERSION="11.8.0"
-ARG UBUNTU="22.04"
-ARG CUDNN="8"
+ARG BASE_IMAGE="nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04"
 
 # Fromの前後でARGのスコープが変わるので注意
-# 上のCUDA_VERSIONはFROMより前に書くこと
-FROM nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-devel-ubuntu${UBUNTU}
+# 上のARGはFROMより前に書くこと
+FROM $BASE_IMAGE
 LABEL maintainer="mjun"
 
 # 環境変数 Versionなど

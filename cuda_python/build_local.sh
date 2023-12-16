@@ -55,13 +55,19 @@ elif [[ "$PYTHON" == *3.5* ]]; then
     GET_PIP_URL="https://bootstrap.pypa.io/pip/3.5/get-pip.py"
 fi
 
+if [[ "$CUDA_VERSION" == 10.* ]]; then
+    # 古いCUDAの場合は，nvcr.ioからpullする
+    BASE_IMAGE="nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-devel-ubuntu${UBUNTU}"
+else
+    BASE_IMAGE="nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-devel-ubuntu${UBUNTU}"
+fi
+
 IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION//./}-python${PYTHON//./}-server:latest"
 
 docker build \
     --build-arg PYTHON=${PYTHON} \
-    --build-arg CUDA_VERSION=${CUDA_VERSION} \
+    --build-arg BASE_IMAGE=${BASE_IMAGE} \
     --build-arg ROOT_PASSWORD=${ROOT_PASSWORD} \
-    --build-arg CUDNN=${CUDNN} \
-    --build-arg UBUNTU=${UBUNTU} \
     --build-arg GET_PIP_URL=${GET_PIP_URL} \
     -t ${IMAGE_NAME} .
+
