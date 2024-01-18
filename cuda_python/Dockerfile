@@ -58,6 +58,7 @@ RUN apt-get update \
     vim \
     emacs \
     gosu \
+    ninja-build \
     # ロケールを日本語UTF-8に設定
     # これによりDocker環境下で日本語入力が可能となる
     && locale-gen ja_JP.UTF-8 \
