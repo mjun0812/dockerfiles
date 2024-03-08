@@ -1,24 +1,10 @@
 #!/bin/bash
 
-ONNX_VERSION="1.14.1"
-ONNXRUNTIME_VERSION="1.15.1"
-TENSORRT_MIDDLE_VERSION="8.6.1"
-OPENVINO_VERSION="2023.0.2"
-
-USER_ID=`id -u`
-GROUP_ID=`id -g`
-GROUP_NAME=`id -gn`
-USER_NAME=$USER
+source "$(dirname "$0")"/config.sh
 
 VOLUME="${HOME}/workspace"
-CONTAINER_NAME_PREFIX="-$(date '+%s')"
 
 CMD=$@
-
-IMAGE_NAME="${USER_NAME}/torch-onnx${ONNX_VERSION//./}-${ONNXRUNTIME_VERSION//./}-trt${TENSORRT_MIDDLE_VERSION//./}-vino${OPENVINO_VERSION//./}-server:latest"
-
-CONTAINER_NAME="${USER_NAME}-torch-onnx${ONNX_VERSION//./}-${ONNXRUNTIME_VERSION//./}-trt${TENSORRT_MIDDLE_VERSION//./}-vino${OPENVINO_VERSION//./}-server${CONTAINER_NAME_PREFIX}"
-
 if type nvcc > /dev/null 2>&1; then
     # Use GPU
     docker run \

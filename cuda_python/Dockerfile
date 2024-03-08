@@ -7,7 +7,6 @@ LABEL maintainer="mjun"
 
 # 環境変数 Versionなど
 ARG PYTHON
-ARG ROOT_PASSWORD
 ARG GET_PIP_URL="https://bootstrap.pypa.io/get-pip.py"
 
 # gitをインストールするときに必要 tzdataをinstallされてしまうため
@@ -66,22 +65,10 @@ RUN apt-get update \
     && apt-get -y clean \
     && rm -rf /var/lib/apt/lists/*
 
-# ctrl + dでコンテナが終了しないようにする
-# exit or 10回打てば終了する
-RUN echo 'set -o ignoreeof' >> /etc/zsh/zshrc
-RUN { \
-    echo "export HISTSIZE=10000"; \
-    echo "export SAVEHIST=10000"; \
-    echo "export LS_OPTIONS='--color=auto'"; \
-    echo "alias ls='ls \$LS_OPTIONS'"; \
-    echo "autoload -Uz compinit"; \ 
-    echo "compinit"; \
-    echo "zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'"; \
-    echo "zstyle ':completion:*' menu select=2"; \
-    } >> /etc/zsh/zshrc
+COPY zshrc /etc/zsh/zshrc
 
-# Rootのパス変更
-RUN echo "root:root" | chpasswd
+# exec sudo commannd with no password
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # ####### Install Python #######
 RUN wget -q "https://www.python.org/ftp/python/${PYTHON}/Python-${PYTHON}.tar.xz" \

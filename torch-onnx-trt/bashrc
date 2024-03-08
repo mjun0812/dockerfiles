@@ -1,0 +1,8 @@
+set -o ignoreeof
+
+export PATH="~/.local/bin:$PATH"
+export HISTSIZE=10000
+export SAVEHIST=10000
+export CUDA_MODULE_LOADING=LAZY
+
+alias ls='ls --color=auto'

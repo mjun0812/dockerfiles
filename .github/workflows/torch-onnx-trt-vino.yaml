@@ -10,21 +10,18 @@ jobs:
     strategy:
       matrix:
         include:
-          - PYTHON: "311"
-            PYTHON_CP: "311"
-            CUDA_MIDDLE_VERSION: "11.8"
-            TENSORRT_FULL_VERSION: "8.6.1.6"
-            TENSORRT_MIDDLE_VERSION: "8.6.1"
-            TENSORRT_OSS_VERSION: "23.08"
-            TENSORRT_OS: "ubuntu2204"
-            TORCH_TENSORRT_VERSION: "1.4.0"
+          - BASE_IMAGE: "nvcr.io/nvidia/tensorrt:24.02-py3"
+            TENSOR_RT_OSS_VERSION: "v9.3.0"
+            PYCUDA_VERSION: "2024.1"
+            # ONNX
+            ONNX_VERSION: "1.15.0"
+            ONNXRUNTIME_VERSION: "v1.17.1"
             ONNX_TENSORRT_TAG: "release/8.6-GA"
-            ONNX_VERSION: "1.14.1"
-            ONNXRUNTIME_VERSION: "1.15.1"
-            ONNXRUNTIME_CLONE_TAG: "ae74a517b62baa6d973e46b5b51ac9a640512c46"
-            OPENVINO_VERSION: "2023.0.2"
-            POETRY_VERSION: "1.6.1"
-            tags: ghcr.io/mjun0812/torch-onnx1141-1151-trt861-vino202302-server
+            # PyTorch
+            TORCH_VERSION: "2.2.1"
+            TORCHVISION_VERSION: "0.17.1"
+            TORCH_TENSORRT_VERSION: "2.2.0"
+            tags: ghcr.io/mjun0812/torch-onnx1150-1171-trt-vino-server
     steps:
       - name: Maximize build space
         run: |
@@ -107,20 +104,15 @@ jobs:
         with:
           context: "./torch-onnx-trt-vino/"
           build-args: |
-            PYTHON=${{ matrix.PYTHON }}
-            PYTHON_CP=${{ matrix.PYTHON_CP }}
-            CUDA_MIDDLE_VERSION=${{ matrix.CUDA_MIDDLE_VERSION }}
-            TENSORRT_FULL_VERSION=${{ matrix.TENSORRT_FULL_VERSION }}
-            TENSORRT_MIDDLE_VERSION=${{ matrix.TENSORRT_MIDDLE_VERSION }}
-            TENSORRT_OSS_VERSION=${{ matrix.TENSORRT_OSS_VERSION }}
-            TENSORRT_OS=${{ matrix.TENSORRT_OS }}
-            TORCH_TENSORRT_VERSION=${{ matrix.TORCH_TENSORRT_VERSION }}
-            ONNX_TENSORRT_TAG=${{ matrix.ONNX_TENSORRT_TAG }}
+            BASE_IMAGE=${{ matrix.BASE_IMAGE }}
+            TENSOR_RT_OSS_VERSION=${{ matrix.TENSOR_RT_OSS_VERSION }}
+            PYCUDA_VERSION=${{ matrix.PYCUDA_VERSION }}
             ONNX_VERSION=${{ matrix.ONNX_VERSION }}
             ONNXRUNTIME_VERSION=${{ matrix.ONNXRUNTIME_VERSION }}
-            ONNXRUNTIME_CLONE_TAG=${{ matrix.ONNXRUNTIME_CLONE_TAG }}
-            OPENVINO_VERSION=${{ matrix.OPENVINO_VERSION }}
-            POETRY_VERSION=${{ matrix.POETRY_VERSION }}
+            ONNX_TENSORRT_TAG=${{ matrix.ONNX_TENSORRT_TAG }}
+            TORCH_VERSION=${{ matrix.TORCH_VERSION }}
+            TORCHVISION_VERSION=${{ matrix.TORCHVISION_VERSION }}
+            TORCH_TENSORRT_VERSION=${{ matrix.TORCH_TENSORRT_VERSION }}
           push: true
           platforms: linux/amd64
           tags: ${{ matrix.tags }}
