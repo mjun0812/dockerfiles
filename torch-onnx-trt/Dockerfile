@@ -73,12 +73,20 @@ ENV LD_LIBRARY_PATH /onnx-tensorrt/build:$LD_LIBRARY_PATH
 
 # install onnxruntime
 # https://onnxruntime.ai/docs/build/eps.html
-RUN git clone https://github.com/microsoft/onnxruntime.git -b ${ONNXRUNTIME_VERSION} \
-    && cd onnxruntime \
-    && ./build.sh --parallel --enable_pybind \
-    --compile_no_warning_as_error --allow_running_as_root --config Release --skip_tests \
-    --cuda_home /usr/local/cuda --cudnn_home /usr/lib/x86_64-linux-gnu/ \
-    --use_tensorrt --tensorrt_home /usr/src/tensorrt --use_tensorrt_oss_parser \
+RUN git clone https://github.com/microsoft/onnxruntime.git -b ${ONNXRUNTIME_VERSION}
+RUN cd /onnxruntime \
+    && ./build.sh \
+    --parallel $(nproc) \
+    --enable_pybind \
+    --compile_no_warning_as_error \
+    --allow_running_as_root \
+    --config Release \
+    --skip_tests \
+    --cuda_home /usr/local/cuda \
+    --cudnn_home /usr/lib/x86_64-linux-gnu/ \
+    --use_tensorrt \
+    --tensorrt_home /usr/src/tensorrt \
+    --use_tensorrt_oss_parser \
     --build_wheel \
     && pip install /onnxruntime/build/Linux/Release/dist/*.whl \
     && rm -rf /onnxruntime

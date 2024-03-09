@@ -75,6 +75,7 @@ ENV LD_LIBRARY_PATH /onnx-tensorrt/build:$LD_LIBRARY_PATH
 RUN curl -L https://storage.openvinotoolkit.org/repositories/openvino/packages/2024.0/linux/l_openvino_toolkit_ubuntu22_2024.0.0.14509.34caeefd078_x86_64.tgz --output openvino.tgz \
     && tar -xf openvino.tgz \
     && rm -rf openvino.tgz \
+    && mkdir /opt/intel \
     && mv l_openvino_toolkit_ubuntu22_2024.0.0.14509.34caeefd078_x86_64 /opt/intel/openvino_2024.0.0 \
     && cd /opt/intel/openvino_2024.0.0 \
     && sh ./install_dependencies/install_openvino_dependencies.sh \

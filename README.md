@@ -19,19 +19,14 @@ Docker Image を作って Github Container Registry にひたすらあげるリ�
 ## PyTorch + ONNX + TensorRT + OpenVINO
 
 - Ubuntu 22.04
-- Python 3.11
-- CUDA 11.8
-- PyTorch 2.0.1
-- onnx 1.14.1
-- TensorRT 8.6.1.6
-  - TensorRT OSS 2023.08
-  - onnx-tensorrt release/8.6-GA
-  - torch2trt 36656b614f3fbc067ac673932e2200d7afdae712
-  - PyTorch-TensorRT 1.4.0
-- OpenVINO 2023.0.2
+- Python 3.10
+- CUDA 12.1
+- PyTorch 2.2.1
+- onnx 1.15.0
+- OpenVINO 2024.0.0
 
 ```bash
-docker pull ghcr.io/mjun0812/torch-onnx1141-1151-trt861-vino202302-server:latest
+docker pull ghcr.io/mjun0812/torch-onnx1150-1171-trt-vino-server:latest
 
 # or
 
@@ -46,14 +41,10 @@ docker pull ghcr.io/mjun0812/torch-onnx1141-1151-trt861-vino202302-server:latest
 - CUDA 11.8
 - PyTorch 2.0.1
 - onnx 1.14.1
-- TensorRT 8.6.1.6
-  - TensorRT OSS 2023.08
-  - onnx-tensorrt release/8.6-GA
-  - torch2trt 36656b614f3fbc067ac673932e2200d7afdae712
-  - PyTorch-TensorRT 1.4.0
+- TensorRT 8.6.3
 
 ```bash
-docker pull ghcr.io/mjun0812/torch-onnx1141-1151-trt861-server:latest
+docker pull ghcr.io/mjun0812/torch-onnx1150-1171-trt-server:latest
 
 # or
 
