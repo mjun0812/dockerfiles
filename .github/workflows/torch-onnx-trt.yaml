@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - BASE_IMAGE: "nvcr.io/nvidia/tensorrt:24.02-py3"
+          - BASE_IMAGE: "nvcr.io/nvidia/tensorrt:23.12-py3"
             TENSOR_RT_OSS_VERSION: "v9.3.0"
             PYCUDA_VERSION: "2024.1"
             # ONNX
