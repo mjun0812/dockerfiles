@@ -18,9 +18,9 @@ NVIDIA-Docker2 がインストールされている環境で使ってくださ�
 
 ### Local Build and Local Image Run
 
-Docker image の Build を`./build_local.sh`で，  
+Docker image の Build を`./build.sh`で，  
 コンテナの起動を`./run_local.sh`で行えます．  
-option の確認は`./build_local.sh -h`，`./run_local.sh -h`で行えます．
+option の確認は`./build.sh -h`，`./run_local.sh -h`で行えます．
 
 ## 構築可能な環境
 
@@ -35,26 +35,26 @@ UbuntuのバージョンはCUDAのバージョンによって制限されるた�
 
 ## 起動例
 
-`build_local.sh`と`run_local.sh`では，`-c`と`-u`,`--cudnn`は同じ値を
+`build.sh`と`run_local.sh`では，`-c`と`-u`,`--cudnn`は同じ値を
 設定する必要があります．`build.sh`で`-c 11.0.3`にしたら，
 `run_local.sh`でも`-c 11.0.3`として下さい．
 
 - CUDA=11.0.3, Python=3.8.10
 
 ```bash
-./build_local.sh -p 3.8.10 -c 11.0.3
+./build.sh -p 3.8.10 -c 11.0.3
 ```
 
 - CUDA=10.2
 
 ```bash
-./build_local.sh -c 10.2
+./build.sh -c 10.2
 ```
 
 - CUDA=9.2
 
 ```bash
-./build_local.sh -c 9.2 -u 18.04 -cudnn 7
+./build.sh -c 9.2 -u 18.04 -cudnn 7
 ```
 
 - コンテナ名を変更する
