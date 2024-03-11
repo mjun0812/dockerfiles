@@ -11,9 +11,8 @@ export HOME=/home/${USER_NAME}
 touch $HOME/.zshrc
 chown $USER_NAME:$GROUP_NAME $HOME
 
-CMD=$@
 if [[ $# -eq 0 ]]; then
     exec /usr/sbin/gosu ${USER_NAME} zsh
 else
-    /usr/sbin/gosu ${USER_NAME} $CMD
+    /usr/sbin/gosu ${USER_NAME} "$@"
 fi

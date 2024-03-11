@@ -10,9 +10,8 @@ useradd -u ${USER_ID} -g ${GROUP_NAME} -G sudo -o -m ${USER_NAME} -s /bin/bash >
 export HOME=/home/${USER_NAME}
 chown $USER_NAME:$GROUP_NAME $HOME
 
-CMD=$@
 if [[ $# -eq 0 ]]; then
     exec /usr/sbin/gosu ${USER_NAME} bash
 else
-    /usr/sbin/gosu ${USER_NAME} $CMD
+    /usr/sbin/gosu ${USER_NAME} "$@"
 fi
