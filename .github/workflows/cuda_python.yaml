@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        flavor: ["devel", "runtime"]
         include:
           - cuda: "12.1.1"
             python: "3.11.7"
@@ -104,7 +105,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push (devel)
+      - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: "./cuda_python/"
@@ -115,27 +116,9 @@ jobs:
             UBUNTU=${{ matrix.ubuntu }}
             ROOT_PASSWORD=${{ matrix.root_password }}
             GET_PIP_URL=${{ matrix.get_pip_url }}
-            BASE_IMAGE_FLAVOR=devel
+            BASE_IMAGE_FLAVOR=${{ matrix.flavor }}
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ghcr.io/mjun0812/cuda${{ matrix.cuda }}-python${{ matrix.python_short }}-devel-server:latest
-          cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.cuda }}-${{ matrix.python }}-devel
-          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.cuda }}-${{ matrix.python }}-devel
-
-      - name: Build and push (runtime)
-        uses: docker/build-push-action@v4
-        with:
-          context: "./cuda_python/"
-          build-args: |
-            PYTHON=${{ matrix.python }}
-            CUDA_VERSION=${{ matrix.cuda }}
-            CUDNN=${{ matrix.cudnn }}
-            UBUNTU=${{ matrix.ubuntu }}
-            ROOT_PASSWORD=${{ matrix.root_password }}
-            GET_PIP_URL=${{ matrix.get_pip_url }}
-            BASE_IMAGE_FLAVOR=devel
-          push: true
-          platforms: linux/amd64,linux/arm64
-          tags: ghcr.io/mjun0812/cuda${{ matrix.cuda }}-python${{ matrix.python_short }}-runtime-server:latest
-          cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.cuda }}-${{ matrix.python }}-runtime
-          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.cuda }}-${{ matrix.python }}-runtime
+          tags: ghcr.io/mjun0812/cuda${{ matrix.cuda }}-python${{ matrix.python_short }}-${{ matrix.flavor }}-server:latest
+          cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.cuda }}-${{ matrix.python }}-${{ matrix.flavor }}
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.cuda }}-${{ matrix.python }}-${{ matrix.flavor }}
