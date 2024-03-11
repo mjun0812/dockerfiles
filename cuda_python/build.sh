@@ -4,6 +4,7 @@ CUDA_VERSION="11.8.0"
 UBUNTU="22.04"
 CUDNN="8"
 PYTHON="3.11.5"
+BASE_IMAGE_FLAVOR="devel"
 USER_NAME=$USER
 
 DESCRIPTION=$(cat <<< "CUDA + Python Docker
@@ -13,7 +14,8 @@ Option:
     -p, --python: python version. default to $PYTHON
     -c, --cuda:   CUDA Version. default to $CUDA_VERSION
     -u, --ubuntu: Ubuntu Version. default to $UBUNTU
-    --cudnn:      CUDNN Version. default to $CUDNN"
+    --cudnn:      CUDNN Version. default to $CUDNN
+    --flavor:     Base Image Flavor. (devel, runtime) default to $BASE_IMAGE_FLAVOR"
 )
 
 for OPT in "$@"; do
@@ -38,6 +40,10 @@ for OPT in "$@"; do
             CUDNN="$2"
             shift 2
         ;;
+        '--flavor')
+            BASE_IMAGE_FLAVOR="$2"
+            shift 2
+        ;;
     esac
 done
 
@@ -49,8 +55,8 @@ elif [[ "$PYTHON" == *3.5* ]]; then
     GET_PIP_URL="https://bootstrap.pypa.io/pip/3.5/get-pip.py"
 fi
 
-BASE_IMAGE="nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-devel-ubuntu${UBUNTU}"
-IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION//./}-python${PYTHON//./}-server:latest"
+BASE_IMAGE="nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-${BASE_IMAGE_FLAVOR}-ubuntu${UBUNTU}"
+IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION}-python${PYTHON}-${BASE_IMAGE_FLAVOR}-server:latest"
 
 docker build \
     --build-arg PYTHON=${PYTHON} \

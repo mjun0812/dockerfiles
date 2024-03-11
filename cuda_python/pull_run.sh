@@ -10,6 +10,7 @@ GROUP_ID=`id -g`
 GROUP_NAME=`id -gn`
 USER_NAME=$USER
 UBUNTU=""
+BASE_IMAGE_FLAVOR="devel"
 
 DESCRIPTION=$(cat <<< "CUDA + Python Docker
 同階層にpoetry, requirements.txtを置くと自動でパッケージがインストールされます
@@ -20,6 +21,7 @@ Option:
     -c, --cuda:   CUDA Version. default is $CUDA_VERSION
     -p, --python: python version. default to $PYTHON 
     -u, --ubuntu: ubuntu version.
+    --flavor:     Base Image Flavor. (devel, runtime) default to $BASE_IMAGE_FLAVOR
     --prefix:     Set Container Name Prefix. Ex.hoge-cuda112-server-[prefix]. default is unixtime.
     -d: Detach(background) run."
 )
@@ -54,11 +56,15 @@ for OPT in "$@"; do
             CONTAINER_NAME_PREFIX="-$2"
             shift 2
         ;;
+        '--flavor')
+            BASE_IMAGE_FLAVOR="$2"
+            shift 2
+        ;;
     esac
 done
 
-IMAGE_NAME="ghcr.io/mjun0812/cuda${CUDA_VERSION//./}-python${PYTHON//./}${UBUNTU}-server:latest"
-CONTAINER_NAME="${USER_NAME}-cuda${CUDA_VERSION//./}-python${PYTHON//./}${UBUNTU}-server${CONTAINER_NAME_PREFIX}"
+IMAGE_NAME="ghcr.io/mjun0812/cuda${CUDA_VERSION}-python${PYTHON}${UBUNTU}-${BASE_IMAGE_FLAVOR}-server:latest"
+CONTAINER_NAME="${USER_NAME}-cuda${CUDA_VERSION//./}-python${PYTHON//./}${UBUNTU}-${BASE_IMAGE_FLAVOR}-server${CONTAINER_NAME_PREFIX}"
 
 GPU_OPTION=""
 if type nvcc > /dev/null 2>&1; then
