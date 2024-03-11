@@ -8,7 +8,7 @@ GROUP_NAME=${GROUP_NAME:-group}
 groupadd -g ${GROUP_ID} ${GROUP_NAME} > /dev/null 2>&1
 useradd -u ${USER_ID} -g ${GROUP_NAME} -G sudo -o -m ${USER_NAME} -s /bin/bash > /dev/null 2>&1
 export HOME=/home/${USER_NAME}
-chown -R $USER_NAME:$GROUP_NAME $HOME
+chown $USER_NAME:$GROUP_NAME $HOME
 
 CMD=$@
 if [[ $# -eq 0 ]]; then
