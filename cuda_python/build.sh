@@ -56,7 +56,7 @@ elif [[ "$PYTHON" == *3.5* ]]; then
 fi
 
 BASE_IMAGE="nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-${BASE_IMAGE_FLAVOR}-ubuntu${UBUNTU}"
-IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION}-python${PYTHON}-${BASE_IMAGE_FLAVOR}-server:latest"
+IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION//,/}-python${PYTHON//.}-${BASE_IMAGE_FLAVOR}-server:latest"
 
 docker build \
     --build-arg PYTHON=${PYTHON} \
