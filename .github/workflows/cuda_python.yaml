@@ -11,7 +11,7 @@ jobs:
       matrix:
         include:
           - cuda: "12.1.1"
-            cuda_short: "121"
+            cuda_short: "1211"
             python: "3.11.7"
             python_short: "311"
             ubuntu: "22.04"
@@ -19,7 +19,7 @@ jobs:
             get_pip_url: "https://bootstrap.pypa.io/get-pip.py"
             flavor: "devel"
           - cuda: "12.1.1"
-            cuda_short: "121"
+            cuda_short: "1211"
             python: "3.11.7"
             python_short: "311"
             ubuntu: "22.04"
