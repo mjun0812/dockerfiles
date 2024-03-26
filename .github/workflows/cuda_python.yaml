@@ -194,11 +194,7 @@ jobs:
           build-args: |
             PYTHON=${{ matrix.python }}
             CUDA_VERSION=${{ matrix.cuda }}
-            CUDNN=${{ matrix.cudnn }}
-            UBUNTU=${{ matrix.ubuntu }}
-            ROOT_PASSWORD=${{ matrix.root_password }}
-            GET_PIP_URL=${{ matrix.get_pip_url }}
-            BASE_IMAGE_FLAVOR=${{ matrix.flavor }}
+            BASE_IMAGE=nvidia/cuda:${{ matrix.cuda }}-cudnn${{ matrix.cudnn }}-{{ matrix.flavor }}-ubuntu${{ matrix.ubuntu }}
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ghcr.io/mjun0812/cuda${{ matrix.cuda_short }}-python${{ matrix.python_short }}-${{ matrix.flavor }}-server:latest
