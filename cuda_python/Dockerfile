@@ -1,5 +1,4 @@
-ARG BASE_IMAGE="nvidia/cuda:11.8.0-cudnn8-devel-ubuntu22.04"
-
+ARG BASE_IMAGE
 # Fromの前後でARGのスコープが変わるので注意
 # 上のARGはFROMより前に書くこと
 FROM $BASE_IMAGE
