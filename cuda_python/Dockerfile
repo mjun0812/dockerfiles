@@ -21,10 +21,6 @@ ENV PYTHONUNBUFFERED=1
 # apt packageのミラー先を日本に変更して高速化
 # RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
 
-# Update Nvidia GPG Key for Ubuntu18.04 image
-RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
-RUN apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/7fa2af80.pub
-
 # --no-install-recommends: 依存を最小限にしてinstall
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
