@@ -4,7 +4,7 @@ Docker Image を作って Github Container Registry にひたすらあげるリ�
 
 ## 事前準備
 
-Github Container RegistryからImageをダウンロードするには，Github Personal Tokenを用いたログインが必要です．
+Github Container Registry から Image をダウンロードするには，Github Personal Token を用いたログインが必要です．
 
 ```bash
 docker login ghcr.io -u mjun0812 --password-stdin
@@ -18,7 +18,7 @@ docker login ghcr.io -u mjun0812 --password-stdin
 ### devel
 
 | CUDA   | Python  | Ubuntu | image name                                                         | cmd                               |
-|--------|---------|--------|--------------------------------------------------------------------|-----------------------------------|
+| ------ | ------- | ------ | ------------------------------------------------------------------ | --------------------------------- |
 | 12.1.1 | 3.11.5  | 22.04  | ghcr.io/mjun0812/cuda1180-python311-devel-server:latest            | `./pull_run.sh -c 12.1.1 -p 3.11` |
 | 11.8.0 | 3.11.5  | 22.04  | ghcr.io/mjun0812/cuda1180-python311-devel-server:latest            | `./pull_run.sh -p 3.11`           |
 | 11.8.0 | 3.10.13 | 22.04  | ghcr.io/mjun0812/cuda1180-python310-devel-server:latest            | `./pull_run.sh`                   |
@@ -32,7 +32,7 @@ docker login ghcr.io -u mjun0812 --password-stdin
 ### runtime
 
 | CUDA   | Python  | Ubuntu | image name                                                           | cmd                               |
-|--------|---------|--------|----------------------------------------------------------------------|-----------------------------------|
+| ------ | ------- | ------ | -------------------------------------------------------------------- | --------------------------------- |
 | 12.1.1 | 3.11.5  | 22.04  | ghcr.io/mjun0812/cuda1180-python311-runtime-server:latest            | `./pull_run.sh -c 12.1.1 -p 3.11` |
 | 11.8.0 | 3.11.5  | 22.04  | ghcr.io/mjun0812/cuda1180-python311-runtime-server:latest            | `./pull_run.sh -p 3.11`           |
 | 11.8.0 | 3.10.13 | 22.04  | ghcr.io/mjun0812/cuda1180-python310-runtime-server:latest            | `./pull_run.sh`                   |
@@ -64,7 +64,6 @@ cd torch-onnx-trt
 ./pull_run.sh
 ```
 
-
 ## PyTorch + ONNX + TensorRT + OpenVINO (`torch-onnx-trt-vino`)
 
 Base Image: `nvcr.io/nvidia/tensorrt:23.12-py3`
@@ -76,7 +75,7 @@ Base Image: `nvcr.io/nvidia/tensorrt:23.12-py3`
 - onnx 1.15.0
 - onnxruntime 1.17.1
 - TensorRT 8.6.3
-- OpenVINO 2024.0.0
+- OpenVINO 2023.3.0
 
 ```bash
 docker pull ghcr.io/mjun0812/torch-onnx1150-1171-trt-vino-server:latest
