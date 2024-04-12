@@ -8,5 +8,5 @@ export CUDA_MODULE_LOADING=LAZY
 alias ls='ls --color=auto'
 
 # Below line breaks apt repository
-# So, exec only manual
+# So, exec only manually
 # source /opt/intel/openvino_2023/setupvars.sh
