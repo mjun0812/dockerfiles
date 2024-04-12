@@ -2,14 +2,6 @@
 
 Docker Image を作って Github Container Registry にひたすらあげるリポジトリ
 
-## 事前準備
-
-Github Container Registry から Image をダウンロードするには，Github Personal Token を用いたログインが必要です．
-
-```bash
-docker login ghcr.io -u mjun0812 --password-stdin
-```
-
 ## CUDA + Python (`cuda_python`)
 
 - devel: created from `nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-devel-ubuntu${UBUNTU}`
