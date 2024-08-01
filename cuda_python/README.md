@@ -1,13 +1,30 @@
-# NVIDIA CUDA Docker Container by mjun
+# NVIDIA CUDA Docker Container with Python
 
-このリポジトリは機械学習用に
-CUDA と Python が使えるDockerコンテナを作るためのものです。
-ホストマシンに既に Docker > 20.10と
-NVIDIA-Docker2 がインストールされている環境で使ってください。
+このリポジトリは機械学習用にCUDAとPythonが使えるDockerコンテナを作るためのものです。
+ホストマシンに既にDockerとNVIDIA-Container-Toolkitがインストールされている環境で使ってください。
+
+## 構築可能な環境
+
+- Ubuntu
+- Python 3.8--3.11
+- CUDA 9--12
+
+Pythonは[indygreg/python-build-standalone](https://github.com/indygreg/python-build-standalone)
+のビルド済みPythonを使用しています。
+
+UbuntuのバージョンはCUDAのバージョンによって制限されるため，
+以下のDocker HubかNGCで提供されている組み合わせを使用してください．
+
+<https://hub.docker.com/r/nvidia/cuda>
+
+<https://catalog.ngc.nvidia.com/orgs/nvidia/containers/cuda>
 
 ## 使い方
 
 ### Pull Image and Run
+
+このリポジトリからアップロードしている、ビルド済みのDockerイメージをGitHub Container Registry
+から入手可能です。
 
 ```bash
 ./pull_run.sh
@@ -18,20 +35,8 @@ NVIDIA-Docker2 がインストールされている環境で使ってくださ�
 
 ### Local Build and Local Image Run
 
-Docker image の Build を`./build.sh`で，  
-コンテナの起動を`./run_local.sh`で行えます．  
-option の確認は`./build.sh -h`，`./run_local.sh -h`で行えます．
-
-## 構築可能な環境
-
-- Python 3.5--3.11
-- CUDA 9--11
-
-Pythonのバージョンは自由に決定できますが，
-UbuntuのバージョンはCUDAのバージョンによって制限されるため，
-以下のDocker Hubで提供されている組み合わせを使用してください．
-
-<https://hub.docker.com/r/nvidia/cuda>
+Docker imageのBuild を`./build.sh`で，コンテナの起動を`./run_local.sh`で行えます．  
+optionの確認は`./build.sh -h`，`./run_local.sh -h`で行えます．
 
 ## 起動例
 
@@ -45,56 +50,10 @@ UbuntuのバージョンはCUDAのバージョンによって制限されるた�
 ./build.sh -p 3.8.10 -c 11.0.3
 ```
 
-- CUDA=10.2
-
-```bash
-./build.sh -c 10.2
-```
-
-- CUDA=9.2
-
-```bash
-./build.sh -c 9.2 -u 18.04 -cudnn 7
-```
-
 - コンテナ名を変更する
 
 ```bash
-./run_local.sh -v /hoge/path -c 11.0.3 --prefix test
+./run_local.sh --prefix test
 
 cotainer name: mjun-cuda1103-server-test
 ```
-
-## Tips
-
-### NVIDIA/CUDA のイメージの更新 2022/04/28
-
-2022/04/28 に，NVIDIA の apt リポジトリの GPG Key が更新された影響で，
-古い Image を用いたビルドができなくなっています．
-その場合，`docker pull`コマンドでもう一度 Image を取りに行くか，
-ローカルの Image を`docker rm`して削除して下さい．
-
-### docker の中で作ったファイルが docker の外で操作出来ない問題
-
-これはdockerコンテナの中では通常root ユーザーで操作を行うため、
-作成したファイルの権限が root になってしまうことが原因です。  
-なので、本レポジトリでは docker の外と同じユーザーを作成して、
-そのユーザーでdocker内にログインするようにしています。  
-さらにユーザがdocker内でsudoが使えるようにしています。
-デフォルトのユーザパスワードは`$USER`に設定しています。  
-なお、この方法を使う場合、Linux の user id と group id を
-docker の外と中で同じにする必要があります。  
-詳しくは参考リンクを見てください。
-
-<https://qiita.com/yohm/items/047b2e68d008ebb0f001>
-
-なお、この問題は最近リリースされた rootless-dockerや
-mac, windows 版の docker でも発生しません。
-
-### ctrl + d と ctrl + p, q
-
-コンテナを起動したままホストに戻るには、`run_local.sh`, `pull_run.sh`を実行したあと、
-コンテナを detatch(デタッチ, (ctrl + p -> ctrl + q))する必要があります。  
-ctrl + d で exit するとコンテナが削除されてしまうので、
-事故を防止するためにコンテナ内では ctrl + d を 10 回押さないと 
-exit出来ないようにしています．
