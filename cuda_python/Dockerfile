@@ -6,8 +6,6 @@ LABEL maintainer="mjun"
 
 ARG PYTHON="3.11.9"
 ARG PYTHON_RELEASE_TAG="20240726"
-# x86_64 or aarch64
-ARG ARCH="x86_64"
 
 ENV DEBIAN_FRONTEND=noninteractive
 # ロケールを日本語UTF-8に設定
@@ -51,7 +49,7 @@ RUN locale-gen ja_JP.UTF-8 \
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # ####### Install Python #######
-RUN curl -L "https://github.com/indygreg/python-build-standalone/releases/download/${PYTHON_RELEASE_TAG}/cpython-${PYTHON}+${PYTHON_RELEASE_TAG}-${ARCH}-unknown-linux-gnu-install_only.tar.gz" -o python.tar.gz \
+RUN curl -L "https://github.com/indygreg/python-build-standalone/releases/download/${PYTHON_RELEASE_TAG}/cpython-${PYTHON}+${PYTHON_RELEASE_TAG}-x86_64-unknown-linux-gnu-install_only.tar.gz" -o python.tar.gz \
     && tar xvf python.tar.gz -C /usr/local \
     && rm -f python.tar.gz
 ENV PATH="/usr/local/python/bin:$PATH"

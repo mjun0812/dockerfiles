@@ -6,7 +6,7 @@ Repositories that create Docker Images and give them to the Github Container Reg
 
 ## CUDA + Python (`cuda_python`)
 
-This Docker image includes CUDA and Python and is available for x86_64 and arm64 platforms.
+This Docker image includes CUDA and Python and is available for x86_64 platform.
 
 - devel: created from `nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-devel-ubuntu${UBUNTU}`
 - runtime: created from `nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-runtime-ubuntu${UBUNTU}`
