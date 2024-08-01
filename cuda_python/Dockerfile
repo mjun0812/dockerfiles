@@ -51,10 +51,9 @@ RUN locale-gen ja_JP.UTF-8 \
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # ####### Install Python #######
-RUN curl -L "https://github.com/indygreg/python-build-standalone/releases/download/${PYTHON_RELEASE_TAG}/cpython-${PYTHON}+${PYTHON_RELEASE_TAG}-${ARCH}-unknown-linux-gnu-pgo+lto-full.tar.zst" -o python.tar.zst \
-    && tar -axvf python.tar.zst \
-    && mv python/install /usr/local/python \
-    && rm -rf python.tar.zst python
+RUN curl -L "https://github.com/indygreg/python-build-standalone/releases/download/${PYTHON_RELEASE_TAG}/cpython-${PYTHON}+${PYTHON_RELEASE_TAG}-${ARCH}-unknown-linux-gnu-install_only.tar.gz" -o python.tar.gz \
+    && tar xvf python.tar.zst -C /usr/local \
+    && rm -f python.tar.zst
 ENV PATH="/usr/local/python/bin:$PATH"
 ENV LD_LIBRARY_PATH="/usr/local/python/lib:$LD_LIBRARY_PATH"
 
