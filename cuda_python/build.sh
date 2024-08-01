@@ -7,6 +7,7 @@ PYTHON="3.11.9"
 PYTHON_RELEASE_TAG="20240726"
 BASE_IMAGE_FLAVOR="devel"
 USER_NAME=$USER
+ARCH="x86_64"
 
 DESCRIPTION=$(cat <<< "CUDA + Python Docker
 
@@ -16,6 +17,7 @@ Option:
     -c, --cuda:   CUDA Version. default to $CUDA_VERSION
     -u, --ubuntu: Ubuntu Version. default to $UBUNTU
     --cudnn:      CUDNN Version. default to $CUDNN
+    --arch:       Architecture. (x86_64 or aarch64) default to $ARCH
     --flavor:     Base Image Flavor. (devel, runtime) default to $BASE_IMAGE_FLAVOR"
 )
 
@@ -58,4 +60,6 @@ IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION//,/}-python${PYTHON//.}-${BASE_IMAGE
 docker build \
     --build-arg PYTHON=${PYTHON} \
     --build-arg BASE_IMAGE=${BASE_IMAGE} \
+    --build-arg PYTHON_RELEASE_TAG=${PYTHON_RELEASE_TAG} \
+    --build-arg ARCH=${ARCH} \
     -t ${IMAGE_NAME} .
