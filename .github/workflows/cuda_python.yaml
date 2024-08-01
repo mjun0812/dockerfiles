@@ -15,11 +15,10 @@ jobs:
         flavor: ["devel", "runtime"]
         python: ["3.12.4", "3.11.9", "3.10.14", "3.9.19", "3.8.19"]
         base_image:
+          - "12.2.2-cudnn8-*-ubuntu22.04"
           - "12.1.1-cudnn8-*-ubuntu22.04"
           - "11.8.0-cudnn8-*-ubuntu22.04"
-          - "11.8.0-cudnn8-*-ubuntu20.04"
           - "11.7.1-cudnn8-*-ubuntu22.04"
-          - "11.7.1-cudnn8-*-ubuntu20.04"
           - "11.6.2-cudnn8-*-ubuntu20.04"
           - "11.3.1-cudnn8-*-ubuntu20.04"
 
@@ -51,7 +50,7 @@ jobs:
           cuda_version=$(echo "${{ matrix.base_image }}" | cut -d'-' -f1)
           cuda_short_version=$(echo $cuda_version | tr -d '.')
           python_short=$(echo "${{ matrix.python }}" | cut -d'.' -f1-2 | tr -d '.')
-          base_image=$(echo "${{ matrix.base_image }}" | sed "s/\*/${{ matrix.flavor }}/g")
+          base_image="nvcr.io/nvidia/cuda:$(echo "${{ matrix.base_image }}" | sed "s/\*/${{ matrix.flavor }}/g")"
           tag=ghcr.io/mjun0812/cuda${cuda_short_version}-python${python_short}-${{ matrix.flavor }}-server:latest
 
           echo "cuda_version=${cuda_version}" >> $GITHUB_OUTPUT

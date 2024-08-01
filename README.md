@@ -6,36 +6,39 @@ Repositories that create Docker Images and give them to the Github Container Reg
 
 ## CUDA + Python (`cuda_python`)
 
+This Docker image includes CUDA and Python and is available for x86_64 and arm64 platforms.
+
 - devel: created from `nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-devel-ubuntu${UBUNTU}`
 - runtime: created from `nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-runtime-ubuntu${UBUNTU}`
 
-### devel
+```bash
+docker pull ghcr.io/mjun0812/cuda${cuda_version}-python${python_version}-${flavor}-server:latest
+```
 
-| CUDA   | Python  | Ubuntu | image name                                                         | cmd                               |
-| ------ | ------- | ------ | ------------------------------------------------------------------ | --------------------------------- |
-| 12.1.1 | 3.11.5  | 22.04  | ghcr.io/mjun0812/cuda1180-python311-devel-server:latest            | `./pull_run.sh -c 12.1.1 -p 3.11` |
-| 11.8.0 | 3.11.5  | 22.04  | ghcr.io/mjun0812/cuda1180-python311-devel-server:latest            | `./pull_run.sh -p 3.11`           |
-| 11.8.0 | 3.10.13 | 22.04  | ghcr.io/mjun0812/cuda1180-python310-devel-server:latest            | `./pull_run.sh`                   |
-| 11.8.0 | 3.10.13 | 20.04  | ghcr.io/mjun0812/cuda1180-python310-ubuntu2004-devel-server:latest | `./pull_run.sh -u 20.04`          |
-| 11.7.1 | 3.10.13 | 22.04  | ghcr.io/mjun0812/cuda1171-python310-devel-server:latest            | `./pull_run.sh -c 11.7.1 -p 3.10` |
-| 11.6.2 | 3.10.13 | 20.04  | ghcr.io/mjun0812/cuda1162-python310-devel-server:latest            | `./pull_run.sh -c 11.6.2 -p 3.10` |
-| 11.3.1 | 3.10.13 | 20.04  | ghcr.io/mjun0812/cuda1131-python310-devel-server:latest            | `./pull_run.sh -c 11.3.1 -p 3.10` |
-| 11.3.1 | 3.8.16  | 20.04  | ghcr.io/mjun0812/cuda1131-python38-devel-server:latest             | `./pull_run.sh -c 11.3.1 -p 3.8`  |
-| 10.2   | 3.8.16  | 18.04  | ghcr.io/mjun0812/cuda102-python38-devel-server:latest              | `./pull_run.sh -c 10.2 -p 3.8`    |
+- **cuda_version**
+  - 1222 (12.2.2, Ubuntu22.04)
+  - 1211 (12.1.1, Ubuntu22.04)
+  - 1180 (11.8.0, Ubuntu22.04)
+  - 1171 (11.7.1, Ubuntu22.04)
+  - 1162 (11.6.2, Ubuntu20.04)
+  - 1131 (11.3.1, Ubuntu20.04)
 
-### runtime
+- **python_version**
+  - "312" (3.12.4)
+  - "311" (3.11.9)
+  - "310" (3.10.14)
+  - "39" (3.9.19)
+  - "38" (3.8.19)
 
-| CUDA   | Python  | Ubuntu | image name                                                           | cmd                               |
-| ------ | ------- | ------ | -------------------------------------------------------------------- | --------------------------------- |
-| 12.1.1 | 3.11.5  | 22.04  | ghcr.io/mjun0812/cuda1180-python311-runtime-server:latest            | `./pull_run.sh -c 12.1.1 -p 3.11` |
-| 11.8.0 | 3.11.5  | 22.04  | ghcr.io/mjun0812/cuda1180-python311-runtime-server:latest            | `./pull_run.sh -p 3.11`           |
-| 11.8.0 | 3.10.13 | 22.04  | ghcr.io/mjun0812/cuda1180-python310-runtime-server:latest            | `./pull_run.sh`                   |
-| 11.8.0 | 3.10.13 | 20.04  | ghcr.io/mjun0812/cuda1180-python310-ubuntu2004-runtime-server:latest | `./pull_run.sh -u 20.04`          |
-| 11.7.1 | 3.10.13 | 22.04  | ghcr.io/mjun0812/cuda1171-python310-runtime-server:latest            | `./pull_run.sh -c 11.7.1 -p 3.10` |
-| 11.6.2 | 3.10.13 | 20.04  | ghcr.io/mjun0812/cuda1162-python310-runtime-server:latest            | `./pull_run.sh -c 11.6.2 -p 3.10` |
-| 11.3.1 | 3.10.13 | 20.04  | ghcr.io/mjun0812/cuda1131-python310-runtime-server:latest            | `./pull_run.sh -c 11.3.1 -p 3.10` |
-| 11.3.1 | 3.8.16  | 20.04  | ghcr.io/mjun0812/cuda1131-python38-runtime-server:latest             | `./pull_run.sh -c 11.3.1 -p 3.8`  |
-| 10.2   | 3.8.16  | 18.04  | ghcr.io/mjun0812/cuda102-python38-runtime-server:latest              | `./pull_run.sh -c 10.2 -p 3.8`    |
+- **flavor**
+  - devel
+  - runtime
+
+### example
+
+```bash
+docker pull ghcr.io/mjun0812/cuda1211-python311-runtime-server:latest
+```
 
 ## PyTorch + ONNX + TensorRT (`torch-onnx-trt`)
 
