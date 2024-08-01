@@ -52,8 +52,8 @@ RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # ####### Install Python #######
 RUN curl -L "https://github.com/indygreg/python-build-standalone/releases/download/${PYTHON_RELEASE_TAG}/cpython-${PYTHON}+${PYTHON_RELEASE_TAG}-${ARCH}-unknown-linux-gnu-install_only.tar.gz" -o python.tar.gz \
-    && tar xvf python.tar.zst -C /usr/local \
-    && rm -f python.tar.zst
+    && tar xvf python.tar.gz -C /usr/local \
+    && rm -f python.tar.gz
 ENV PATH="/usr/local/python/bin:$PATH"
 ENV LD_LIBRARY_PATH="/usr/local/python/lib:$LD_LIBRARY_PATH"
 
