@@ -8,13 +8,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      PYTHON_RELEASE_TAG: "20240726"
+      PYTHON_RELEASE_TAG: "20241016"
     strategy:
       fail-fast: false
       matrix:
         flavor: ["devel", "runtime"]
-        python: ["3.12.4", "3.11.9", "3.10.14", "3.9.19", "3.8.19"]
+        python: ["3.12.7", "3.11.10", "3.10.15", "3.9.20"]
         base_image:
+          - "12.4.1-cudnn-*-ubuntu22.04"
           - "12.2.2-cudnn8-*-ubuntu22.04"
           - "12.1.1-cudnn8-*-ubuntu22.04"
           - "11.8.0-cudnn8-*-ubuntu22.04"

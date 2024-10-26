@@ -52,7 +52,18 @@ for OPT in "$@"; do
     esac
 done
 
-BASE_IMAGE="nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-${BASE_IMAGE_FLAVOR}-ubuntu${UBUNTU}"
+version_ge() {
+    test "$(printf '%s\n' "$1" "$2" | sort -V | head -n 1)" != "$1"
+}
+
+if version_ge "$CUDA_VERSION" "12.4.0"; then
+    # CUDA 12.4.0以降はcudnnのversionを含めない
+    BASE_IMAGE="nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn-${BASE_IMAGE_FLAVOR}-ubuntu${UBUNTU}"
+else
+    # CUDA 12.4.0未満はcudnn versionを含める
+    BASE_IMAGE="nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-${BASE_IMAGE_FLAVOR}-ubuntu${UBUNTU}"
+fi
+
 IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION//,/}-python${PYTHON//.}-${BASE_IMAGE_FLAVOR}-server:latest"
 
 docker build \

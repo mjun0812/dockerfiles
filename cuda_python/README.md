@@ -5,9 +5,9 @@
 
 ## 構築可能な環境
 
-- Ubuntu
-- Python 3.8--3.11
-- CUDA 9--12
+- Ubuntu 20.04, 22.04
+- Python 3.8--3.12
+- CUDA 9--12.4
 
 Pythonは[indygreg/python-build-standalone](https://github.com/indygreg/python-build-standalone)
 のビルド済みPythonを使用しています。

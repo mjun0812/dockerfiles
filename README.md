@@ -2,11 +2,11 @@
 
 Docker Imageを作ってGithub Container Registryにひたすらあげるリポジトリ
 
-Repositories that create Docker Images and give them to the Github Container Registry.
+This repository provides Docker images and publishes them to the GitHub Container Registry.
 
 ## CUDA + Python (`cuda_python`)
 
-This Docker image includes CUDA and Python and is available for x86_64 platform.
+This Docker image is including CUDA and Python and is available for x86_64 platform.
 
 - devel: created from `nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-devel-ubuntu${UBUNTU}`
 - runtime: created from `nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-runtime-ubuntu${UBUNTU}`
@@ -16,6 +16,7 @@ docker pull ghcr.io/mjun0812/cuda${cuda_version}-python${python_version}-${flavo
 ```
 
 - **cuda_version**
+  - 1241 (12.4.1, Ubuntu22.04)
   - 1222 (12.2.2, Ubuntu22.04)
   - 1211 (12.1.1, Ubuntu22.04)
   - 1180 (11.8.0, Ubuntu22.04)
@@ -28,11 +29,17 @@ docker pull ghcr.io/mjun0812/cuda${cuda_version}-python${python_version}-${flavo
   - "311" (3.11.9)
   - "310" (3.10.14)
   - "39" (3.9.19)
-  - "38" (3.8.19)
 
 - **flavor**
-  - devel
-  - runtime
+  - devel (including all cuda lib (ex. nvcc), but large image.)
+  - runtime (light volume image, but including only cuda runtime)
+
+### Deprecated
+
+These versions is deprecated, but legacy image can be pulled from ghcr.io.
+
+- Python
+  - "38" (3.8.19)
 
 ### example
 
