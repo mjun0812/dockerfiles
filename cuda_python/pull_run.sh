@@ -2,6 +2,8 @@
 
 CUDA_VERSION="11.8.0"
 PYTHON="3.11"
+UBUNTU=""
+BASE_IMAGE_FLAVOR="devel"
 
 CONTAINER_NAME_PREFIX="-$(date '+%s')"
 VOLUME="${HOME}/workspace"
@@ -9,8 +11,6 @@ USER_ID=`id -u`
 GROUP_ID=`id -g`
 GROUP_NAME=`id -gn`
 USER_NAME=$USER
-UBUNTU=""
-BASE_IMAGE_FLAVOR="devel"
 
 DESCRIPTION=$(cat <<< "CUDA + Python Docker
 同階層にpoetry, requirements.txtを置くと自動でパッケージがインストールされます

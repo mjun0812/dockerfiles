@@ -3,8 +3,8 @@
 CUDA_VERSION="11.8.0"
 UBUNTU="22.04"
 CUDNN="8"
-PYTHON="3.11.9"
-PYTHON_RELEASE_TAG="20240726"
+PYTHON="3.11"
+PYTHON_RELEASE_TAG="latest"
 BASE_IMAGE_FLAVOR="devel"
 USER_NAME=$USER
 
@@ -64,10 +64,9 @@ else
     BASE_IMAGE="nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-${BASE_IMAGE_FLAVOR}-ubuntu${UBUNTU}"
 fi
 
-IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION//,/}-python${PYTHON//.}-${BASE_IMAGE_FLAVOR}-server:latest"
+IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION}-python${PYTHON}-${BASE_IMAGE_FLAVOR}-server:latest"
 
 docker build \
     --build-arg PYTHON=${PYTHON} \
     --build-arg BASE_IMAGE=${BASE_IMAGE} \
-    --build-arg PYTHON_RELEASE_TAG=${PYTHON_RELEASE_TAG} \
     -t ${IMAGE_NAME} .

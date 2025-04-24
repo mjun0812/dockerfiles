@@ -7,20 +7,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      PYTHON_RELEASE_TAG: "20241016"
     strategy:
       fail-fast: false
       matrix:
         flavor: ["devel", "runtime"]
-        python: ["3.12.7", "3.11.10", "3.10.15", "3.9.20"]
+        python: ["3.12", "3.11", "3.10"]
         base_image:
+          - "12.8.1-cudnn-*-ubuntu24.04"
           - "12.4.1-cudnn-*-ubuntu22.04"
-          - "12.2.2-cudnn8-*-ubuntu22.04"
           - "12.1.1-cudnn8-*-ubuntu22.04"
           - "11.8.0-cudnn8-*-ubuntu22.04"
-          - "11.7.1-cudnn8-*-ubuntu22.04"
-          - "11.6.2-cudnn8-*-ubuntu20.04"
           - "11.3.1-cudnn8-*-ubuntu20.04"
 
     steps:
@@ -44,7 +40,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
       - name: Get Info
         id: info
         run: |
@@ -66,7 +62,6 @@ jobs:
           context: "./cuda_python/"
           build-args: |
             PYTHON=${{ matrix.python }}
-            PYTHON_RELEASE_TAG=${{ env.PYTHON_RELEASE_TAG }}
             CUDA_VERSION=${{ steps.info.outputs.cuda_version }}
             BASE_IMAGE=${{ steps.info.outputs.base_image }}
           push: true

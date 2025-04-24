@@ -4,22 +4,18 @@ ARG BASE_IMAGE
 FROM $BASE_IMAGE
 LABEL maintainer="mjun"
 
-ARG PYTHON="3.11.9"
-ARG PYTHON_RELEASE_TAG="20240726"
+ARG PYTHON="3.11"
 
-ENV DEBIAN_FRONTEND=noninteractive
-# ロケールを日本語UTF-8に設定
-ENV LANG="ja_JP.UTF-8"
-ENV LANGUAGE="ja_JP:ja"
-ENV LC_ALL="ja_JP.UTF-8"
-ENV TZ="Asia/Tokyo"
-# 標準出力・標準エラーのストリームのバッファリングを行わない
-ENV PYTHONUNBUFFERED=1
-# .pycファイルを生成しない
-ENV PYTHONDONTWRITEBYTECODE=1
-
-# apt packageのミラー先を日本に変更して高速化
-# RUN sed -i 's@archive.ubuntu.com@ftp.jaist.ac.jp/pub/Linux@g' /etc/apt/sources.list
+ENV DEBIAN_FRONTEND=noninteractive \
+    # ロケールを日本語UTF-8に設定
+    LANG="ja_JP.UTF-8" \
+    LANGUAGE="ja_JP:ja" \
+    LC_ALL="ja_JP.UTF-8" \
+    TZ="Asia/Tokyo" \
+    # 標準出力・標準エラーのストリームのバッファリングを行わない
+    PYTHONUNBUFFERED=1 \
+    # .pycファイルを生成しない
+    PYTHONDONTWRITEBYTECODE=1
 
 # --no-install-recommends: 依存を最小限にしてinstall
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -37,6 +33,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     ninja-build \
     ca-certificates \
     zstd \
+    jq \
     && apt-get -y clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -49,14 +46,13 @@ RUN locale-gen ja_JP.UTF-8 \
 RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 # ####### Install Python #######
-RUN curl -L "https://github.com/indygreg/python-build-standalone/releases/download/${PYTHON_RELEASE_TAG}/cpython-${PYTHON}+${PYTHON_RELEASE_TAG}-x86_64-unknown-linux-gnu-install_only.tar.gz" -o python.tar.gz \
+RUN URL=$(curl -sSL https://api.github.com/repos/astral-sh/python-build-standalone/releases/latest | jq -r '.. | .browser_download_url? // empty'| grep ${PYTHON} | grep 'cpython-.*x86_64-unknown-linux-gnu-install_only.tar.gz$') \
+    && echo $URL > hoge\
+    && curl -L $URL -o python.tar.gz \
     && tar xvf python.tar.gz -C /usr/local \
     && rm -f python.tar.gz
-ENV PATH="/usr/local/python/bin:$PATH"
-ENV LD_LIBRARY_PATH="/usr/local/python/lib:$LD_LIBRARY_PATH"
-
-# install python package
-RUN pip install -U pip wheel setuptools && rm -rf /root/.cache/pip
+ENV PATH="/usr/local/python/bin:$PATH" \
+    LD_LIBRARY_PATH="/usr/local/python/lib:$LD_LIBRARY_PATH"
 
 COPY zshrc /etc/zsh/zshrc
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh

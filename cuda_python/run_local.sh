@@ -3,7 +3,7 @@
 CUDA_VERSION="11.8.0"
 UBUNTU="22.04"
 CUDNN="8"
-PYTHON="3.11.5"
+PYTHON="3.11"
 CONTAINER_NAME_PREFIX="-$(date '+%s')"
 VOLUME="${HOME}/workspace"
 USER_ID=`id -u`
@@ -69,7 +69,7 @@ for OPT in "$@"; do
 done
 
 IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION}-python${PYTHON}-${BASE_IMAGE_FLAVOR}-server:latest"
-CONTAINER_NAME="${USER_NAME}-cuda${CUDA_VERSION//./}-python${PYTHON//./}}-${BASE_IMAGE_FLAVOR}-server${CONTAINER_NAME_PREFIX}"
+CONTAINER_NAME="${USER_NAME}-cuda${CUDA_VERSION//./}-python${PYTHON//./}-${BASE_IMAGE_FLAVOR}-server${CONTAINER_NAME_PREFIX}"
 
 GPU_OPTION=""
 if type nvcc > /dev/null 2>&1; then
