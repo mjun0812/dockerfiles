@@ -19,6 +19,21 @@ docker pull ghcr.io/mjun0812/cuda12.4-python3.11-devel:latest
 docker pull ghcr.io/mjun0812/cuda12.1-python3.11-runtime:latest
 ```
 
+### useful script
+
+```bash
+cd cuda_python
+
+# Local build
+./build.sh -c 12.8.1 -p 3.13
+./run_local.sh -v 12.8.1 -p 3.13
+
+# Pull ghcr.io
+./pull_run.sh -v 12.8.1 -p 3.13
+```
+
+### Version
+
 - **cuda_short_version**
   - 12.8 (12.8.1, Ubuntu24.04)
   - 12.4 (12.4.1, Ubuntu22.04)
@@ -34,19 +49,6 @@ docker pull ghcr.io/mjun0812/cuda12.1-python3.11-runtime:latest
 - **flavor**
   - devel (including all cuda lib (ex. nvcc), but large image.)
   - runtime (light volume image, but including only cuda runtime)
- 
-### script
-
-```bash
-cd cuda_python
-
-# Local build
-./build.sh -c 12.8.1 -p 3.13
-./run_local.sh -v 12.8.1 -p 3.13
-
-# Pull ghcr.io
-./pull_run.sh -v 12.8.1 -p 3.13
-```
 
 ## (no longer maintenance) PyTorch + ONNX + TensorRT (`torch-onnx-trt`)
 
