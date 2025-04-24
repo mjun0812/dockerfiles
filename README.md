@@ -6,48 +6,49 @@ This repository provides Docker images and publishes them to the GitHub Containe
 
 ## CUDA + Python (`cuda_python`)
 
-This Docker image is including CUDA and Python and is available for x86_64 platform.
+This Docker image is including CUDA and Python at x86_64 platform.
 
 - devel: created from `nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-devel-ubuntu${UBUNTU}`
 - runtime: created from `nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-runtime-ubuntu${UBUNTU}`
 
 ```bash
-docker pull ghcr.io/mjun0812/cuda${cuda_version}-python${python_version}-${flavor}-server:latest
+docker pull ghcr.io/mjun0812/cuda${cuda_short_version}-python${python_short_version}-${flavor}:latest
+
+# example
+docker pull ghcr.io/mjun0812/cuda12.4-python3.11-devel:latest
+docker pull ghcr.io/mjun0812/cuda12.1-python3.11-runtime:latest
 ```
 
-- **cuda_version**
-  - 1241 (12.4.1, Ubuntu22.04)
-  - 1222 (12.2.2, Ubuntu22.04)
-  - 1211 (12.1.1, Ubuntu22.04)
-  - 1180 (11.8.0, Ubuntu22.04)
-  - 1171 (11.7.1, Ubuntu22.04)
-  - 1162 (11.6.2, Ubuntu20.04)
-  - 1131 (11.3.1, Ubuntu20.04)
+- **cuda_short_version**
+  - 12.8 (12.8.1, Ubuntu24.04)
+  - 12.4 (12.4.1, Ubuntu22.04)
+  - 12.1 (12.1.1, Ubuntu22.04)
+  - 11.8 (11.8.0, Ubuntu22.04)
+  - 11.3 (11.3.1, Ubuntu20.04)
 
-- **python_version**
-  - "312" (3.12.4)
-  - "311" (3.11.9)
-  - "310" (3.10.14)
-  - "39" (3.9.19)
+- **python_short_version**
+  - 3.12
+  - 3.11
+  - 3.10
 
 - **flavor**
   - devel (including all cuda lib (ex. nvcc), but large image.)
   - runtime (light volume image, but including only cuda runtime)
-
-### Deprecated
-
-These versions is deprecated, but legacy image can be pulled from ghcr.io.
-
-- Python
-  - "38" (3.8.19)
-
-### example
+ 
+### script
 
 ```bash
-docker pull ghcr.io/mjun0812/cuda1211-python311-runtime-server:latest
+cd cuda_python
+
+# Local build
+./build.sh -c 12.8.1 -p 3.13
+./run_local.sh -v 12.8.1 -p 3.13
+
+# Pull ghcr.io
+./pull_run.sh -v 12.8.1 -p 3.13
 ```
 
-## PyTorch + ONNX + TensorRT (`torch-onnx-trt`)
+## (no longer maintenance) PyTorch + ONNX + TensorRT (`torch-onnx-trt`)
 
 Base Image: `nvcr.io/nvidia/tensorrt:23.12-py3`
 
@@ -68,7 +69,7 @@ cd torch-onnx-trt
 ./pull_run.sh
 ```
 
-## PyTorch + ONNX + TensorRT + OpenVINO (`torch-onnx-trt-vino`)
+## (no longer maintenance) PyTorch + ONNX + TensorRT + OpenVINO (`torch-onnx-trt-vino`)
 
 Base Image: `nvcr.io/nvidia/tensorrt:23.12-py3`
 
