@@ -4,13 +4,14 @@ CUDA_VERSION="11.8.0"
 UBUNTU="22.04"
 CUDNN="8"
 PYTHON="3.11"
+BASE_IMAGE_FLAVOR="devel"
+
 CONTAINER_NAME_PREFIX="-$(date '+%s')"
 VOLUME="${HOME}/workspace"
 USER_ID=`id -u`
 GROUP_ID=`id -g`
 GROUP_NAME=`id -gn`
 USER_NAME=$USER
-BASE_IMAGE_FLAVOR="devel"
 
 DESCRIPTION=$(cat <<< "CUDA + Python Docker
 同階層にpoetry, requirements.txtを置くと自動でパッケージがインストールされます
@@ -68,8 +69,9 @@ for OPT in "$@"; do
     esac
 done
 
-IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION}-python${PYTHON}-${BASE_IMAGE_FLAVOR}-server:latest"
-CONTAINER_NAME="${USER_NAME}-cuda${CUDA_VERSION//./}-python${PYTHON//./}-${BASE_IMAGE_FLAVOR}-server${CONTAINER_NAME_PREFIX}"
+CUDA_SHORT_VERSION=$(echo $CUDA_VERSION | cut -d. -f1-2)
+IMAGE_NAME="${USER_NAME}/cuda${CUDA_SHORT_VERSION}-python${PYTHON}-${BASE_IMAGE_FLAVOR}:latest"
+CONTAINER_NAME="${USER_NAME}-cuda${CUDA_SHORT_VERSION//./}-python${PYTHON//./}-${BASE_IMAGE_FLAVOR}-${CONTAINER_NAME_PREFIX}"
 
 GPU_OPTION=""
 if type nvcc > /dev/null 2>&1; then

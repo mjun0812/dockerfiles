@@ -45,10 +45,10 @@ jobs:
         id: info
         run: |
           cuda_version=$(echo "${{ matrix.base_image }}" | cut -d'-' -f1)
-          cuda_short_version=$(echo $cuda_version | tr -d '.')
-          python_short=$(echo "${{ matrix.python }}" | cut -d'.' -f1-2 | tr -d '.')
+          cuda_short_version=$(echo $cuda_version | cut -d '.' -f1-2)
+          python_short=$(echo "${{ matrix.python }}" | cut -d'.' -f1-2)
           base_image="nvcr.io/nvidia/cuda:$(echo "${{ matrix.base_image }}" | sed "s/\*/${{ matrix.flavor }}/g")"
-          tag=ghcr.io/mjun0812/cuda${cuda_short_version}-python${python_short}-${{ matrix.flavor }}-server:latest
+          tag=ghcr.io/mjun0812/cuda${cuda_short_version}-python${python_short}-${{ matrix.flavor }}:latest
 
           echo "cuda_version=${cuda_version}" >> $GITHUB_OUTPUT
           echo "cuda_short_version=${cuda_short_version}" >> $GITHUB_OUTPUT
@@ -62,7 +62,6 @@ jobs:
           context: "./cuda_python/"
           build-args: |
             PYTHON=${{ matrix.python }}
-            CUDA_VERSION=${{ steps.info.outputs.cuda_version }}
             BASE_IMAGE=${{ steps.info.outputs.base_image }}
           push: true
           platforms: linux/amd64

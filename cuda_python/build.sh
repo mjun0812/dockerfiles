@@ -64,7 +64,8 @@ else
     BASE_IMAGE="nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-${BASE_IMAGE_FLAVOR}-ubuntu${UBUNTU}"
 fi
 
-IMAGE_NAME="${USER_NAME}/cuda${CUDA_VERSION}-python${PYTHON}-${BASE_IMAGE_FLAVOR}-server:latest"
+CUDA_SHORT_VERSION=$(echo $CUDA_VERSION | cut -d. -f1-2)
+IMAGE_NAME="${USER_NAME}/cuda${CUDA_SHORT_VERSION}-python${PYTHON}-${BASE_IMAGE_FLAVOR}:latest"
 
 docker build \
     --build-arg PYTHON=${PYTHON} \

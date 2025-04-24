@@ -63,8 +63,9 @@ for OPT in "$@"; do
     esac
 done
 
-IMAGE_NAME="ghcr.io/mjun0812/cuda${CUDA_VERSION}-python${PYTHON}${UBUNTU}-${BASE_IMAGE_FLAVOR}-server:latest"
-CONTAINER_NAME="${USER_NAME}-cuda${CUDA_VERSION//./}-python${PYTHON//./}${UBUNTU}-${BASE_IMAGE_FLAVOR}-server${CONTAINER_NAME_PREFIX}"
+CUDA_SHORT_VERSION=$(echo $CUDA_VERSION | cut -d. -f1-2)
+IMAGE_NAME="ghcr.io/mjun0812/cuda${CUDA_SHORT_VERSION}-python${PYTHON}${UBUNTU}-${BASE_IMAGE_FLAVOR}:latest"
+CONTAINER_NAME="${USER_NAME}-cuda${CUDA_SHORT_VERSION//./}-python${PYTHON//./}${UBUNTU}-${BASE_IMAGE_FLAVOR}${CONTAINER_NAME_PREFIX}"
 
 GPU_OPTION=""
 if type nvcc > /dev/null 2>&1; then
