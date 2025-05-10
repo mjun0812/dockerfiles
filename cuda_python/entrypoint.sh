@@ -5,6 +5,7 @@ GROUP_ID=${GROUP_ID:-1000}
 USER_NAME=${USER_NAME:-user}
 GROUP_NAME=${GROUP_NAME:-group}
 
+userdel -r ubuntu > /dev/null 2>&1
 groupadd -g ${GROUP_ID} ${GROUP_NAME} > /dev/null 2>&1
 useradd -u ${USER_ID} -g ${GROUP_NAME} -G sudo -o -m ${USER_NAME} -s /usr/bin/zsh > /dev/null 2>&1
 export HOME=/home/${USER_NAME}
