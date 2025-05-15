@@ -14,8 +14,6 @@ GROUP_NAME=`id -gn`
 USER_NAME=$USER
 
 DESCRIPTION=$(cat <<< "CUDA + Python Docker
-同階層にpoetry, requirements.txtを置くと自動でパッケージがインストールされます
-Volumeはコンテナ内の~/workspaceにマウントされます
 
 Option:
     -v, --volume: Mount Volume. default is $VOLUME

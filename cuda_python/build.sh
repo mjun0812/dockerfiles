@@ -4,7 +4,6 @@ CUDA_VERSION="11.8.0"
 UBUNTU="22.04"
 CUDNN="8"
 PYTHON="3.11"
-PYTHON_RELEASE_TAG="latest"
 BASE_IMAGE_FLAVOR="devel"
 USER_NAME=$USER
 
@@ -12,7 +11,6 @@ DESCRIPTION=$(cat <<< "CUDA + Python Docker
 
 Option:
     -p, --python: python version. default to $PYTHON
-    --tag:        python release tag. default to $PYTHON_RELEASE_TAG
     -c, --cuda:   CUDA Version. default to $CUDA_VERSION
     -u, --ubuntu: Ubuntu Version. default to $UBUNTU
     --cudnn:      CUDNN Version. default to $CUDNN
@@ -27,10 +25,6 @@ for OPT in "$@"; do
         ;;
         '-p' | '--python')
             PYTHON="$2"
-            shift 2
-        ;;
-        '--tag')
-            PYTHON_RELEASE_TAG="$2"
             shift 2
         ;;
         '-c' | '--cuda')
