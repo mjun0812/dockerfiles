@@ -11,7 +11,7 @@ jobs:
       fail-fast: false
       matrix:
         flavor: ["devel", "runtime"]
-        python: ["3.12", "3.11", "3.10"]
+        python: ["3.13", "3.12", "3.11", "3.10"]
         base_image:
           - "12.8.1-cudnn-*-ubuntu24.04"
           - "12.4.1-cudnn-*-ubuntu22.04"
