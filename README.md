@@ -6,7 +6,7 @@ This repository provides Docker images and publishes them to the GitHub Containe
 
 ## CUDA + Python (`cuda_python`)
 
-This Docker image is including CUDA and Python at x86_64 platform.
+This Docker image is including CUDA, Python and uv at x86_64 platform.
 
 - devel: created from `nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-devel-ubuntu${UBUNTU}`
 - runtime: created from `nvcr.io/nvidia/cuda:${CUDA_VERSION}-cudnn${CUDNN}-runtime-ubuntu${UBUNTU}`
@@ -25,16 +25,17 @@ docker pull ghcr.io/mjun0812/cuda12.1-python3.11-runtime:latest
 cd cuda_python
 
 # Local build
-./build.sh -c 12.8.1 -p 3.13
-./run_local.sh -v 12.8.1 -p 3.13
+./build.sh -c 12.8.1 -p 3.13 -u 22.04
+./run_local.sh -c 12.8.1 -p 3.13 -u 22.04
 
 # Pull ghcr.io
-./pull_run.sh -v 12.8.1 -p 3.13
+./pull_run.sh -c 12.8.1 -p 3.13
 ```
 
 ### Version
 
 - **cuda_short_version**
+
   - 12.8 (12.8.1, Ubuntu24.04)
   - 12.4 (12.4.1, Ubuntu22.04)
   - 12.1 (12.1.1, Ubuntu22.04)
@@ -42,6 +43,7 @@ cd cuda_python
   - 11.3 (11.3.1, Ubuntu20.04)
 
 - **python_short_version**
+
   - 3.12
   - 3.11
   - 3.10

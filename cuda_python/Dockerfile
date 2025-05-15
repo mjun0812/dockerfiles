@@ -12,10 +12,13 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANGUAGE="ja_JP:ja" \
     LC_ALL="ja_JP.UTF-8" \
     TZ="Asia/Tokyo" \
+    PATH="/usr/local/python/bin:$PATH" \
+    LD_LIBRARY_PATH="/usr/local/python/lib:$LD_LIBRARY_PATH" \
     # 標準出力・標準エラーのストリームのバッファリングを行わない
     PYTHONUNBUFFERED=1 \
     # .pycファイルを生成しない
-    PYTHONDONTWRITEBYTECODE=1
+    PYTHONDONTWRITEBYTECODE=1 \
+    UV_SYSTEM_PYTHON=1
 
 # --no-install-recommends: 依存を最小限にしてinstall
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -43,7 +46,10 @@ RUN locale-gen ja_JP.UTF-8 \
     && update-locale LANG=ja_JP.UTF-8
 
 # exec sudo commannd with no password
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers \
+    # sudoを使用した時に環境変数を引き継ぐ
+    && echo 'Defaults env_keep += "PATH LD_LIBRARY_PATH UV_SYSTEM_PYTHON PYTHONUNBUFFERED PYTHONDONTWRITEBYTECODE"' >> /etc/sudoers \
+    && echo 'Defaults secure_path="/usr/local/python/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"' >> /etc/sudoers
 
 # ####### Install Python #######
 RUN URL=$(curl -sSL https://api.github.com/repos/astral-sh/python-build-standalone/releases/latest | jq -r '.. | .browser_download_url? // empty'| grep ${PYTHON} | grep 'cpython-.*x86_64-unknown-linux-gnu-install_only.tar.gz$') \
@@ -51,8 +57,9 @@ RUN URL=$(curl -sSL https://api.github.com/repos/astral-sh/python-build-standalo
     && curl -L $URL -o python.tar.gz \
     && tar xvf python.tar.gz -C /usr/local \
     && rm -f python.tar.gz
-ENV PATH="/usr/local/python/bin:$PATH" \
-    LD_LIBRARY_PATH="/usr/local/python/lib:$LD_LIBRARY_PATH"
+
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 COPY zshrc /etc/zsh/zshrc
 COPY --chmod=755 entrypoint.sh /usr/local/bin/entrypoint.sh
