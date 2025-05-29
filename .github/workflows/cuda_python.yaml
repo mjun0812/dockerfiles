@@ -14,6 +14,7 @@ jobs:
         python: ["3.13", "3.12", "3.11", "3.10"]
         base_image:
           - "12.8.1-cudnn-*-ubuntu24.04"
+          - "12.6.3-cudnn-*-ubuntu22.04"
           - "12.4.1-cudnn-*-ubuntu22.04"
           - "12.1.1-cudnn8-*-ubuntu22.04"
           - "11.8.0-cudnn8-*-ubuntu22.04"
