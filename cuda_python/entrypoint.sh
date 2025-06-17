@@ -12,6 +12,13 @@ export HOME=/home/${USER_NAME}
 touch $HOME/.zshrc
 chown $USER_NAME:$GROUP_NAME $HOME
 
+# change owner for install packages using uv
+chown $USER_NAME:$GROUP_NAME /usr/local/python
+chown $USER_NAME:$GROUP_NAME /usr/local/python/bin
+chown $USER_NAME:$GROUP_NAME /usr/local/python/share
+chown $USER_NAME:$GROUP_NAME /usr/local/python/share/man/man1
+chown $USER_NAME:$GROUP_NAME /usr/local/python/lib/python*/site-packages
+
 if [[ $# -eq 0 ]]; then
     exec /usr/sbin/gosu ${USER_NAME} zsh
 else

@@ -4,7 +4,7 @@ Docker Imageを作ってGithub Container Registryにひたすらあげるリポ�
 
 This repository provides Docker images and publishes them to the GitHub Container Registry.
 
-## CUDA + Python (`cuda_python`)
+## CUDA + Python + uv (`cuda_python`)
 
 This Docker image is including CUDA, Python and uv at x86_64 platform.
 
@@ -44,6 +44,14 @@ cd cuda_python
 ./run_local.sh --help
 # Example
 ./run_local.sh -c 12.8.1 -p 3.13 -u 22.04
+```
+
+### Install Python Package
+
+```bash
+# on container shell
+pip install <package>
+uv pip install <package>
 ```
 
 ### Version

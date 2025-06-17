@@ -18,7 +18,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     # .pycファイルを生成しない
     PYTHONDONTWRITEBYTECODE=1 \
-    UV_SYSTEM_PYTHON=1
+    UV_SYSTEM_PYTHON=1 \
+    UV_LINK_MODE=copy
 
 # --no-install-recommends: 依存を最小限にしてinstall
 RUN apt-get update && apt-get install -y --no-install-recommends \
